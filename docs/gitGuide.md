@@ -17,8 +17,8 @@ At this point you should get a message that your git repo has been initialized, 
 whereby: <name> is the name of the remote server, can be whatever you want it to be
          <url> is the URL of the repository, in most cases this will end with a .git 
          
-### example: git remote add gitlab https://github.com/istvan-vonfedak/SpotBuddy/
-         (This will add a remote git connection called gitlab to this repository)
+### example: git remote add https://github.com/istvan-vonfedak/SpotBuddy/
+         (This will add a remote git connection to this repository)
 
 ## STEP THREE: Pull from remote repository
 
@@ -31,10 +31,10 @@ changes on your local git repo. You must either commit (git commit) or stash (gi
 whereby: <name> is the name of the remote server (the name you gave it during remote add) 
          <branch> is the name of the branch you want to pull from (if you want to pull from the main branch use branch name "master") 
          
-### example: git pull gitlab master
+### example: git pull origin master
 
 At this point if the git repository requires permissions to pull from (this one does) it would ask you for your username and password, this is the
-same username/password as you use on gitlab
+same username/password as you use on github
 
 ## USING GIT: 
 
@@ -68,14 +68,14 @@ After your commits, you can push these commits to the server using the push comm
 whereby: <name> is the name of the remote server (the one you gave earlier) 
          <branch> is the name of the branch you want to push to (just like in pull, you can use "master" if you want to push to the main branch)
          
-### example: git push gitlab master
+### example: git push origin master
 
-Your changes should now be reflected on the gitlab website 
+Your changes should now be reflected on the github website 
 
 ## DEFINING DEFAULT REMOTE: 
 
 If you want to save a default remote server and branch, you can add -u to your pull or push command, that way it will save the server and branch
-as an upstream remote, meaning that you no longer need to specify it (so you can just do "git push" instead of "git push gitlab master" for instance)
+as an upstream remote, meaning that you no longer need to specify it (so you can just do "git push" instead of "git push origin master" for instance)
 
 ## OTHER USEFUL COMMANDS: 
 
@@ -84,7 +84,7 @@ Reset - If you made a mistake and want to revert back to the last commit you can
 ### command: git reset --hard 
 
 Note: This is a permanent reset, all your uncommitted changes will be permanently deleted. If you still want to keep them I'd recommend just creating
-a new branch either through gitlab or by using: 
+a new branch either through github or by using: 
 
 ### command: git checkout -b <new branch name> 
 
@@ -103,7 +103,7 @@ After you switch to a branch any commits you make will be to this branch.
 Remember to push all your changes to the remote server as all your changes are only stored locally until you do a git push
 
 revert: If for whatever reason you want to go back to a previous commit you can use the commit id to go to any previous commit.
-commit ids can be found when you go to repository -> commits on the sidebar in gitlab, commit ids will be on the right of the commit
+commit ids can be found when you go to repository -> commits on the sidebar in github, commit ids will be on the right of the commit
 
 ### command: git checkout <commit id>
 
