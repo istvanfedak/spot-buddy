@@ -17,7 +17,7 @@ At this point you should get a message that your git repo has been initialized, 
 whereby: <name> is the name of the remote server, can be whatever you want it to be
          <url> is the URL of the repository, in most cases this will end with a .git 
          
-### example: git remote add gitlab https://git.sviridov.us/seniorProject/WIE.git
+### example: git remote add gitlab https://github.com/istvan-vonfedak/SpotBuddy/
          (This will add a remote git connection called gitlab to this repository)
 
 ## STEP THREE: Pull from remote repository
