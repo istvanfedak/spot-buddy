@@ -31,27 +31,27 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: new Form(
-            key: formKey,
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children:<Widget>[
-                new TextFormField(
-                  decoration: new InputDecoration(labelText: 'Email'),
-                  validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-                  onSaved: (value)=> _email = value , // save email
-                ),
-                new TextFormField(
-                  decoration: new InputDecoration(labelText: 'Password'),
-                  validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-                  obscureText: true,
-                  onSaved: (value) => _password = value ,
-                ),
-                new RaisedButton(
-                  child: new Text('Login',style: new TextStyle(fontSize: 20.0)),
-                  onPressed: validateAndSave,
-                ),
-              ],
-            ),
+          key: formKey,
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:<Widget>[
+              new TextFormField(
+                decoration: new InputDecoration(labelText: 'Email'),
+                validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+                onSaved: (value)=> _email = value , // save email
+              ),
+              new TextFormField(
+                decoration: new InputDecoration(labelText: 'Password'),
+                validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+                obscureText: true,
+                onSaved: (value) => _password = value ,
+              ),
+              new RaisedButton(
+                child: new Text('Login',style: new TextStyle(fontSize: 20.0)),
+                onPressed: validateAndSave,
+              ),
+            ],
+          ),
         ),
       ),
     );
