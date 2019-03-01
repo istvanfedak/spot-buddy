@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'globals.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -23,10 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     final form = formKey.currentState;
     if(form.validate()) {
       form.save();
-      print('Form is valid. Email $_email, password $_password');
+      if (cOut)
+        print('Form is valid. Email $_email, password $_password');
       return true;
     } else {
-      print('Form not invalid. Email $_email, password $_password');
+      if (cOut)
+        print('Form not invalid. Email $_email, password $_password');
       return false;
     }
   }
