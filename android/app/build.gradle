@@ -26,6 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    // changed from 27 to 28 for Firebase auth
     compileSdkVersion 28
 
     sourceSets {
@@ -40,7 +41,9 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "io.github.istvanvonfedak.spotbuddy"
         minSdkVersion 16
+        // changed from 27 to 28 for Firebase auth
         targetSdkVersion 28
+        // Added this line for Firebase auth
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -65,5 +68,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // added this line for Firebase auth
     compile 'com.android.support:multidex:1.0.3'
+    // added this line for Firebase auth
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+
 }
+
+// added this line for Firebase auth
+apply plugin: 'com.google.gms.google-services'
+
