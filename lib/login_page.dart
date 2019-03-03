@@ -22,14 +22,20 @@ class _LoginPageState extends State<LoginPage> {
 
   bool validateAndSave() {
     final form = formKey.currentState;
+    //log validation of user
+    analytics.logEvent(name: 'validateAndSave');
     if(form.validate()) {
       form.save();
       if (cOut)
         print('Form is valid. Email $_email, password $_password');
+      //log valid form
+      analytics.logEvent(name: 'validForm');
       return true;
     } else {
       if (cOut)
         print('Form not invalid. Email $_email, password $_password');
+      //log valid form
+      analytics.logEvent(name: 'invalidForm');
       return false;
     }
   }
@@ -40,9 +46,14 @@ class _LoginPageState extends State<LoginPage> {
         if (_formType == FormType.login) {
           FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
           print('Signed in: ${user.uid}');
+          analytics.logLogin();
+          //log that the user logged in
+          analytics.logLogin();
         } else {
           FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
           print('Registered user: ${user.uid}');
+          // log that the user signed up
+          analytics.logSignUp(signUpMethod: 'FirebaseAuth.instance.createUserWithEmailAndPassword');
         }
       }
       catch(e){
@@ -55,12 +66,16 @@ class _LoginPageState extends State<LoginPage> {
   void moveToRegister(){
     formKey.currentState.reset();
     setState(() {
+      // log transition to register page
+      analytics.setCurrentScreen(screenName: 'Register');
       _formType = FormType.register;
     });
 
   }
   void moveToLogin(){
     formKey.currentState.reset();
+    // log transition to login page
+    analytics.setCurrentScreen(screenName: 'Login');
     setState(() {
       _formType = FormType.login;
     });
