@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'auth.dart';
+import 'AuthProvider.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({this.auth, this.onSignOut});
-  final BaseAuth auth;
+  HomePage({this.onSignOut});
   final VoidCallback onSignOut;
 
-  void _signedOut() async {
+  void _signedOut(BuildContext context) async {
     try {
+      var auth = AuthProvider.of(context).auth;
       await auth.signOut();
       onSignOut();
     } catch (e) {
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                 color: Colors.white
               ),
             ),
-            onPressed: _signedOut,
+            onPressed: () => _signedOut(context),
           ),
         ],
       ),

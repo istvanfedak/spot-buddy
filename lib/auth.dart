@@ -11,13 +11,21 @@ abstract class BaseAuth {
 // generic auth component
 class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  Future<String> signInWithEmailANdPassword(String email, String password) async {
-    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<String> signInWithEmailANdPassword(
+      String email, String password) async {
+    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password
+    );
     return user.uid;
   }
 
-  Future<String> createUserWithEmailAndPassword(String email, String password) async{
-    FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  Future<String> createUserWithEmailAndPassword(
+      String email, String password) async{
+    FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password
+    );
     return user.uid;
   }
 
