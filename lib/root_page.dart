@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'auth.dart';
+import 'home_page.dart';
 
 class RootPage extends StatefulWidget {
   RootPage({this.auth});
@@ -41,6 +42,12 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  void _signedOut() {
+    setState(() {
+      authStatus = AuthStatus.notSignedIn;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     switch(authStatus) {
@@ -50,10 +57,9 @@ class _RootPageState extends State<RootPage> {
           onSignedIn: _signedIn,
         );
       case AuthStatus.signedIn:
-        return Scaffold(
-          body: Container(
-              child: Text('Welcome'),
-            ),
+        return HomePage(
+          auth: widget.auth,
+          onSignOut: _signedOut,
         );
     }
   }
