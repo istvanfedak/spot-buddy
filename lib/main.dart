@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'globals.dart';
 import 'auth.dart';
+import 'root_page.dart';
 
 
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: appColor,
       ),
-      home: new LoginPage(auth: Auth()),
+      home: new RootPage(auth: Auth()),
     );
   }
 }
