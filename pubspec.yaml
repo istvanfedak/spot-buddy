@@ -23,6 +23,7 @@ dependencies:
   firebase_auth: 0.8.1+2
   # for logging files
   firebase_analytics: ^2.0.2+1
+  cloud_firestore: ^0.9.5+2
 
 
 dev_dependencies:

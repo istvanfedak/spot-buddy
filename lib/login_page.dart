@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'globals.dart';
 import 'AuthProvider.dart';
+import 'crud.dart';
+import 'globals.dart' as globals;
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.onSignedIn});
@@ -17,9 +19,13 @@ enum FormType{
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
+  crudMethods crudObj = new crudMethods();
 
   String _email;
   String _password;
+  String _interest1;
+  String _interest2;
+  String _interest3;
   FormType _formType = FormType.login;
 
   bool validateAndSave() {
@@ -42,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void validateAndSubmit() async{
+  Future<void> validateAndSubmit() async{
     if(validateAndSave()) {
       try {
         var auth = AuthProvider.of(context).auth;
@@ -57,13 +63,13 @@ class _LoginPageState extends State<LoginPage> {
           String userId =
             await auth.createUserWithEmailAndPassword(_email, _password);
           print('Registered user: $userId');
+          globals.set_userID('$userId');
           // log that the user signed up
           analytics.logSignUp(
               signUpMethod:
                 'FirebaseAuth.instance.createUserWithEmailAndPassword'
           );
         }
-        widget.onSignedIn();
       }
       catch(e){
         print('error: $e');
@@ -109,27 +115,71 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  List<Widget> buildInputs(){
-    return [
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Email'),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-        onSaved: (value)=> _email = value , // save email
-      ),
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Password'),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-        obscureText: true,
-        onSaved: (value) => _password = value ,
-      ),
-    ];
+  List<Widget> buildInputs() {
+    if (_formType == FormType.login) {
+      return [
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Email'),
+          validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+          onSaved: (value) => _email = value, // save email
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Password'),
+          validator: (value) =>
+          value.isEmpty ? 'Password can\'t be empty' : null,
+          obscureText: true,
+          onSaved: (value) => _password = value,
+        ),
+      ];
+    }
+    else{
+      return [
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Email'),
+          validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+          onSaved: (value) => _email = value, // save email
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Password'),
+          validator: (value) =>
+          value.isEmpty ? 'Password can\'t be empty' : null,
+          obscureText: true,
+          onSaved: (value) => _password = value,
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Interest 1'),
+          validator: (value) =>
+          value.isEmpty ? 'Interest 1 can\'t be empty' : null,
+          obscureText: true,
+          onSaved: (value) => _interest1 = value,
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Interest 2'),
+          validator: (value) =>
+          value.isEmpty ? 'Interest 2 can\'t be empty' : null,
+          obscureText: true,
+          onSaved: (value) => _interest2 = value,
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Interest 3'),
+          validator: (value) =>
+          value.isEmpty ? 'Interest 3 can\'t be empty' : null,
+          obscureText: true,
+          onSaved: (value) => _interest3 = value,
+        ),
+      ];
+    }
   }
   List<Widget> buildSubmitButtons(){
     if(_formType == FormType.login) {
       return [
         new RaisedButton(
           child: new Text('Login', style: new TextStyle(fontSize: 20.0)),
-          onPressed: validateAndSubmit,
+          onPressed: () {
+            validateAndSubmit();
+            widget.onSignedIn();
+
+          }
         ),
         new FlatButton(
           child: new Text(
@@ -141,13 +191,33 @@ class _LoginPageState extends State<LoginPage> {
       return [
         new RaisedButton(
           child: new Text('Create an account', style: new TextStyle(fontSize: 20.0)),
-          onPressed: validateAndSubmit,
+          onPressed: () {
+              validateAndSubmit().then((_){
+              addToDatabase();
+              moveToLogin();
+            });
+          },
         ),
         new FlatButton(
           child: new Text('Have an account? Login', style: new TextStyle(fontSize: 20)),
           onPressed: moveToLogin,
         ),
       ];
+    }
+  }
+  void addToDatabase() async {
+    if(_formType != FormType.login) {
+      Map <String, dynamic> userData = {
+        'uid': globals.get_userID(),
+        'email': _email,
+        'interest1': this._interest1,
+        'interest2': this._interest2,
+        'interest3': this._interest3,
+      };
+      crudObj.addData(userData).catchError((e) {
+        print(e);
+      });
+      moveToLogin();
     }
   }
 }
