@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'AuthProvider.dart';
 import 'feed.dart';
-import 'AuthProvider.dart';
+import 'update_profile.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({this.onSignOut});
@@ -17,13 +17,16 @@ class _HomePageState extends State<HomePage>{
   List<Widget> pages;
   Widget currentPage;
   Feed feed;
+  updateProfile updateProf;
+
 
   @override
   void initState(){
     feed = Feed();
+    updateProf = updateProfile();
     currentPage = feed;
     currentTab = 0;
-    pages = [feed];
+    pages = [feed,updateProf];
 
     super.initState();
   }
@@ -32,6 +35,14 @@ class _HomePageState extends State<HomePage>{
   {
     setState(() {
       currentPage = feed;
+      currentTab = 0;
+    });
+
+  }
+  void moveToUpdate()
+  {
+    setState(() {
+      currentPage = updateProf;
       currentTab = 1;
     });
 
@@ -78,34 +89,17 @@ class _HomePageState extends State<HomePage>{
             icon: new IconButton(
               icon: new Icon(Icons.calendar_today),
               iconSize: 40,
-              //onPressed: moveToCalendar,
+              onPressed: moveToFeed,
             ),
-            title: Text('Create Ride'),
+            title: Text('Buddy Feed'),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
                 icon: new Icon(Icons.local_taxi),
                 iconSize: 40,
-                onPressed: moveToFeed
+                onPressed: moveToUpdate
             ),
-            title: Text('Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.settings),
-                iconSize: 40,
-                onPressed: null
-            ),
-            title: Text('Settings'),
-
-          ),
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.local_taxi),
-                iconSize: 40,
-                onPressed: null
-            ),
-            title: Text('Ride History'),
+            title: Text('Update Profile'),
           ),
           BottomNavigationBarItem(
             icon: new IconButton(
@@ -113,7 +107,7 @@ class _HomePageState extends State<HomePage>{
                 iconSize: 40,
                 onPressed: null
             ),
-            title: Text('Home'),
+            title: Text('Matched Users'),
           ),
         ],
         type: BottomNavigationBarType.fixed,
