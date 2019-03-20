@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'home_page.dart';
+import 'auth.dart';
 import 'AuthProvider.dart';
 
 class RootPage extends StatefulWidget {
+  RootPage({this.auth});
+  final BaseAuth auth;
 
   @override
   State<StatefulWidget> createState() => _RootPageState();
@@ -20,26 +22,36 @@ class _RootPageState extends State<RootPage> {
 
   // alternative to initState when you are inheriting and
   // did change dependencies
+  /*
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     var auth = AuthProvider.of(context).auth;
     auth.currentUser().then((userId){
       setState(() {
-        // if(userId == null)
-        //authStatus = AuthStatus.notSignedIn;
-        // else
-        //authStatus = AuthStatus.signedIn;
+         if(userId == null)
+         authStatus = AuthStatus.notSignedIn;
+         else
+         authStatus = AuthStatus.signedIn;
       });
     });
   }
-
+*/
   // gets called every time a stateful widget it created
   // before the build method is called
   // opportunity to configure initial state of widget
-  @override
+
   void initState() {
     super.initState();
+    widget.auth.currentUser().then((userId){
+      setState(() {
+        if(userId == null){
+          AuthStatus.notSignedIn;
+        } else {
+          AuthStatus.signedIn;
+        }
+      });
+    });
   }
 
   void _signedIn() {
@@ -58,11 +70,13 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     switch(authStatus) {
       case AuthStatus.notSignedIn:
-        return LoginPage(
+        return new LoginPage(
+          auth:widget.auth,
           onSignedIn: _signedIn,
         );
       case AuthStatus.signedIn:
-        return HomePage(
+        return new HomePage(
+          auth:widget.auth,
           onSignOut: _signedOut,
         );
     }

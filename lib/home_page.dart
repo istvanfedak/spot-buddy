@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'AuthProvider.dart';
 import 'feed.dart';
+import 'auth.dart';
 import 'update_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class HomePage extends StatefulWidget {
-  HomePage({this.onSignOut});
+  HomePage({this.onSignOut,this.auth});
+  final BaseAuth auth;
   final VoidCallback onSignOut;
-  int _cIndex = 0;
+
+/*
+  void _signedOut(BuildContext context) async {
+    try {
+      var auth = AuthProvider.of(context).auth;
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
+  }*/
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>{
+
   int currentTab = 0;
   List<Widget> pages;
   Widget currentPage;
@@ -48,18 +63,15 @@ class _HomePageState extends State<HomePage>{
 
   }
 
-  
-/*
   void _signOut() async
   {
     try{
       await widget.auth.signOut();
-      widget.onSignedOut();
+      widget.onSignOut();
     } catch (e) {
       print(e);
     }
-  }*/
-
+  }
 
   @override
   Widget build(BuildContext context){
@@ -69,7 +81,7 @@ class _HomePageState extends State<HomePage>{
           actions: <Widget>[
             new FlatButton(
               child: new Text('Logout', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-              //onPressed: _signOut,
+              onPressed: () => _signOut,
             )
           ]
       ),

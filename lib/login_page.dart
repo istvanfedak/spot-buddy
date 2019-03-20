@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'globals.dart';
 import 'AuthProvider.dart';
+import 'auth.dart';
 import 'crud.dart';
 import 'globals.dart' as globals;
 
 class LoginPage extends StatefulWidget {
-  LoginPage({this.onSignedIn});
+  LoginPage({this.onSignedIn,this.auth});
+  final BaseAuth auth;
   final VoidCallback onSignedIn;
 
   @override
@@ -150,21 +152,18 @@ class _LoginPageState extends State<LoginPage> {
           decoration: new InputDecoration(labelText: 'Interest 1'),
           validator: (value) =>
           value.isEmpty ? 'Interest 1 can\'t be empty' : null,
-          obscureText: true,
           onSaved: (value) => _interest1 = value,
         ),
         new TextFormField(
           decoration: new InputDecoration(labelText: 'Interest 2'),
           validator: (value) =>
           value.isEmpty ? 'Interest 2 can\'t be empty' : null,
-          obscureText: true,
           onSaved: (value) => _interest2 = value,
         ),
         new TextFormField(
           decoration: new InputDecoration(labelText: 'Interest 3'),
           validator: (value) =>
           value.isEmpty ? 'Interest 3 can\'t be empty' : null,
-          obscureText: true,
           onSaved: (value) => _interest3 = value,
         ),
       ];
