@@ -8,7 +8,7 @@ abstract class BaseAuth {
   Future<void> signOut();
 }
 
-// generic auth component
+// concrete class, specifically referring to firebase being our authentication service
 class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<String> signInWithEmailANdPassword(
@@ -32,7 +32,7 @@ class Auth implements BaseAuth {
   // returns NULL if user didn't sign in, else returns userId
   Future<String> currentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
-    return user.uid;
+    return user != null ? user.uid : null;
   }
 
   Future<void> signOut() async {

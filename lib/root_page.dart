@@ -41,17 +41,17 @@ class _RootPageState extends State<RootPage> {
   // before the build method is called
   // opportunity to configure initial state of widget
 
+  @override
   void initState() {
     super.initState();
-    widget.auth.currentUser().then((userId){
-      setState(() {
-        if(userId == null){
-          AuthStatus.notSignedIn;
-        } else {
-          AuthStatus.signedIn;
-        }
+    try {
+      widget.auth.currentUser().then((userId) { //I've removed the 'widget.'
+        setState(() {
+          authStatus =
+          userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+        });
       });
-    });
+    } catch (e) {}
   }
 
   void _signedIn() {
