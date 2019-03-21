@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
+import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 
 class Feed extends StatefulWidget{
@@ -15,7 +15,7 @@ class _Feed extends State<Feed> {
   Completer<GoogleMapController> _controller = Completer();
 
   static const LatLng _center = const LatLng(45.521563, -122.677433);
-  //need to pull this geolocation from the user, and hopefully show buddies around him 
+  //need to pull this geolocation from the user, and hopefully show buddies around him
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
