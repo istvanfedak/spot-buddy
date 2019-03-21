@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: new AppBar(
-          title: new Text('Welcome', style: new TextStyle(fontSize: 20.0)),
+          title: new Text("Weclome", style: new TextStyle(fontSize: 20.0)),
           actions: <Widget>[
             new FlatButton(
               child: new Text('Logout', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
