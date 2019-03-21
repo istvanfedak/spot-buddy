@@ -53,17 +53,18 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> validateAndSubmit() async{
     if(validateAndSave()) {
       try {
-        var auth = AuthProvider.of(context).auth;
+        //var auth = AuthProvider.of(context).auth;
         if (_formType == FormType.login) {
           String userId =
-            await auth.signInWithEmailANdPassword(_email, _password);
+            await widget.auth.signInWithEmailANdPassword(_email, _password);
+          widget.onSignedIn();
           print('Signed in: $userId');
           analytics.logLogin();
           //log that the user logged in
           analytics.logLogin();
         } else {
           String userId =
-            await auth.createUserWithEmailAndPassword(_email, _password);
+            await widget.auth.createUserWithEmailAndPassword(_email, _password);
           print('Registered user: $userId');
           globals.set_userID('$userId');
           // log that the user signed up
@@ -71,6 +72,10 @@ class _LoginPageState extends State<LoginPage> {
               signUpMethod:
                 'FirebaseAuth.instance.createUserWithEmailAndPassword'
           );
+          addToDatabase(); // after creating user, will add info to database, and inside this
+                           // function it also does widget.onSignedIn() so the auth status gets
+                           // changed to signed in, taking the user to the home page. So after
+                           // creating an account, the user does not have go and login.
         }
       }
       catch(e){
@@ -176,7 +181,11 @@ class _LoginPageState extends State<LoginPage> {
           child: new Text('Login', style: new TextStyle(fontSize: 20.0)),
           onPressed: () {
             validateAndSubmit();
-            widget.onSignedIn();
+            //widget.onSignedIn(); ... ruined the code, was changing the auth status to
+                                       // signed in regardless of whether login was valid or not
+                                       // thus taking us to the home page. The fix was to move this
+                                       // line into validateAndSubmit() where we only change auth
+                                       // status to signed in if it worked via firebase.
 
           }
         ),
@@ -191,10 +200,7 @@ class _LoginPageState extends State<LoginPage> {
         new RaisedButton(
           child: new Text('Create an account', style: new TextStyle(fontSize: 20.0)),
           onPressed: () {
-              validateAndSubmit().then((_){
-              addToDatabase();
-              moveToLogin();
-            });
+              validateAndSubmit();
           },
         ),
         new FlatButton(

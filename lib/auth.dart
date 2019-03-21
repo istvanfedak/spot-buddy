@@ -11,6 +11,7 @@ abstract class BaseAuth {
 // concrete class, specifically referring to firebase being our authentication service
 class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   Future<String> signInWithEmailANdPassword(
       String email, String password) async {
     FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
