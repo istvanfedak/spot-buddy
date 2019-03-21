@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
+//GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 class Feed extends StatefulWidget{
   @override
