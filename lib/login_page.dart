@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
       crudObj.addData(userData).catchError((e) {
         print(e);
       });
-      moveToLogin();
+      widget.onSignedIn();
     }
   }
 }

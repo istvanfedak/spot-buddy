@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'globals.dart';
 import 'auth.dart';
+import 'auth.dart';
 import 'root_page.dart';
 import 'AuthProvider.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
 
           primarySwatch: appColor,
         ),
-        home: new RootPage(),
+        home: new RootPage(auth: new Auth()),
       ),
     );
   }

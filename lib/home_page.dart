@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class HomePage extends StatefulWidget {
-  HomePage({this.onSignOut,this.auth});
+  HomePage({this.onSignedOut,this.auth});
   final BaseAuth auth;
-  final VoidCallback onSignOut;
+  final VoidCallback onSignedOut;
 
 /*
   void _signedOut(BuildContext context) async {
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage>{
   {
     try{
       await widget.auth.signOut();
-      widget.onSignOut();
+      widget.onSignedOut();
     } catch (e) {
       print(e);
     }
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage>{
           actions: <Widget>[
             new FlatButton(
               child: new Text('Logout', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-              onPressed: () => _signOut,
+              onPressed: () => _signOut(),
             )
           ]
       ),
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage>{
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: new IconButton(
-              icon: new Icon(Icons.calendar_today),
+              icon: new Icon(Icons.accessibility),
               iconSize: 40,
               onPressed: moveToFeed,
             ),
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage>{
           ),
         ],
         type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.pink,
+        fixedColor: Colors.red,
       ),
     );
   }
