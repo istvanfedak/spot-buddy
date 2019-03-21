@@ -4,7 +4,7 @@ import 'feed.dart';
 import 'auth.dart';
 import 'update_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({this.onSignedOut,this.auth});
@@ -27,7 +27,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
-
   int currentTab = 0;
   List<Widget> pages;
   Widget currentPage;
@@ -53,9 +52,8 @@ class _HomePageState extends State<HomePage>{
       currentTab = 0;
     });
 
-
-
   }
+
   void moveToUpdate()
   {
     setState(() {
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: new AppBar(
-          title: new Text("Weclome", style: new TextStyle(fontSize: 20.0)),
+          title: new Text("Welcome", style: new TextStyle(fontSize: 20.0)),
           actions: <Widget>[
             new FlatButton(
               child: new Text('Logout', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
