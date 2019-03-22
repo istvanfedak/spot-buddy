@@ -43,9 +43,25 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Needed to access location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Needed to access location</string>
+
+   <key>NSLocationAlwaysUsageDescription</key>
+   <string>Needed to access location</string>
+   <key>NSLocationWhenInUseUsageDescription</key>
+   <string>Needed to access location</string>
+   <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+   <string>This app needs access to location when open and in the background.</string>
+
+    <key>NSCalendarsUsageDescription</key>
+    <string>Your prompt</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Your prompt</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Your prompt</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Your prompt</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Your prompt</string>
+    <key>NSRemindersUsageDescription</key>
+    <string>Your prompt</string>
 </dict>
 </plist>

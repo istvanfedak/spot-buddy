@@ -25,10 +25,17 @@ dependencies:
   firebase_analytics: ^2.0.2+1
   cloud_firestore: ^0.9.5+2
   # for google maps api
-  google_maps_flutter: ^0.4.0
+  google_maps_flutter: ^0.2.0
   # for location services
   location: ^2.2.0
   geolocator: ^3.0.1
+  # for permissions, including geo
+  permission: ^0.1.1
+  # writing geo to firestore
+  geoflutterfire: ^2.0.3+2
+  # try
+  rxdart: ^0.20.0
+
 
 
 dev_dependencies:

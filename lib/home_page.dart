@@ -3,11 +3,9 @@ import 'AuthProvider.dart';
 import 'feed.dart';
 import 'auth.dart';
 import 'update_profile.dart';
-import 'matches.dart';
+import 'matches2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-//MATCHED USERS PAGE STILL NEEDS TO BE BUILT OUT, FOR NOW IT HAS THE SAME ROUTE AS BUDDY FEED
 
 class HomePage extends StatefulWidget {
   HomePage({this.onSignedOut,this.auth});
