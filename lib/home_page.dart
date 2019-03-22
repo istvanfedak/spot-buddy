@@ -3,6 +3,7 @@ import 'AuthProvider.dart';
 import 'feed.dart';
 import 'auth.dart';
 import 'update_profile.dart';
+import 'matches.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -34,15 +35,17 @@ class _HomePageState extends State<HomePage>{
   Widget currentPage;
   Feed feed;
   updateProfile updateProf;
+  Matches matches;
 
 
   @override
   void initState(){
     feed = Feed();
     updateProf = updateProfile();
+    matches = Matches();
     currentPage = feed;
     currentTab = 0;
-    pages = [feed,updateProf];
+    pages = [feed,updateProf,matches];
 
     super.initState();
   }
@@ -61,6 +64,14 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       currentPage = updateProf;
       currentTab = 1;
+    });
+
+  }
+  void moveToMatches()
+  {
+    setState(() {
+      currentPage = matches;
+      currentTab = 2;
     });
 
   }
@@ -119,7 +130,7 @@ class _HomePageState extends State<HomePage>{
             icon: new IconButton(
                 icon: new Icon(Icons.home),
                 iconSize: 40,
-                onPressed: null
+                onPressed: moveToMatches
             ),
             title: Text('Matched Users'),
           ),

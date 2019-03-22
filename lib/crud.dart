@@ -22,4 +22,14 @@ class crudMethods {
       print("User not logged in\n");
     }
   }
+
+  getData() async{
+    return await Firestore.instance.collection('users').getDocuments();
+  }
+
+  updateData(selectedDoc, newValues){
+    Firestore.instance.collection('users').document(selectedDoc).updateData(newValues).catchError((e) {
+      print(e);
+      });
+  }
 }
