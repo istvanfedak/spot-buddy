@@ -69,11 +69,11 @@ class _Matches extends State<Matches> {
         trackCameraPosition: true,
       ),
       Positioned(
-          bottom: 50,
-          left: 10,
+          bottom: 30,
+          left: 5,
           child:
           FlatButton(
-              child: Icon(Icons.pin_drop, color: Colors.white),
+              child: Text('Find your buddies', style: new TextStyle(fontSize: 15.0, color: Colors.black)),
               color: Colors.green,
               onPressed: _animateToUser
           )
