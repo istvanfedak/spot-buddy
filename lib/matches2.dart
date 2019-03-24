@@ -37,6 +37,7 @@ class _Matches extends State<Matches> {
   initState() {
     super.initState();
     checkGps();
+    _animateToUser();
   }
 
   var geolocator = Geolocator();
@@ -68,6 +69,7 @@ class _Matches extends State<Matches> {
         compassEnabled: true,
         trackCameraPosition: true,
       ),
+      /*
       Positioned(
           bottom: 30,
           left: 5,
@@ -78,6 +80,7 @@ class _Matches extends State<Matches> {
               onPressed: _animateToUser
           )
       ),
+      */
       Positioned(
           top: 50,
           left: 10,
