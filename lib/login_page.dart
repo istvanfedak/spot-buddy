@@ -59,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             await widget.auth.signInWithEmailANdPassword(_email, _password);
           widget.onSignedIn();
           print('Signed in: $userId');
+          globals.set_userID('$userId');
           analytics.logLogin();
           //log that the user logged in
           analytics.logLogin();
