@@ -10,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
+import 'globals.dart' as globals;
+
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 class Matches extends StatefulWidget {
@@ -128,7 +130,7 @@ class _Matches extends State<Matches> {
     GeoFirePoint point = geo.point(latitude: pos.latitude, longitude: pos.longitude);
     return firestore.collection('locations').add({
       'position': point.data,
-      'name': 'Yay I can be queried!'
+      'uid': globals.get_userID()
     });
   }
 
