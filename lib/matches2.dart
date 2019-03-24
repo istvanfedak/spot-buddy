@@ -63,7 +63,7 @@ class _Matches extends State<Matches> {
             zoom: 15
         ),
         onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
+        myLocationEnabled: false,
         mapType: MapType.normal,
         compassEnabled: true,
         trackCameraPosition: true,
@@ -75,7 +75,7 @@ class _Matches extends State<Matches> {
           FlatButton(
               child: Icon(Icons.pin_drop, color: Colors.white),
               color: Colors.green,
-              onPressed: _addGeoPoint
+              onPressed: _animateToUser
           )
       ),
       Positioned(
@@ -122,16 +122,23 @@ class _Matches extends State<Matches> {
         )
     )
     );
+    _addGeoPoint(pos);
   }
 
   // Set GeoLocation Data
-  Future<DocumentReference> _addGeoPoint() async {
-    var pos = await location.getLocation();
+  Future<DocumentReference> _addGeoPoint(pos) async {
+    //var pos = await location.getLocation();
     GeoFirePoint point = geo.point(latitude: pos.latitude, longitude: pos.longitude);
-    return firestore.collection('locations').add({
-      'position': point.data,
-      'uid': globals.get_userID()
-    });
+    if (Firestore.instance.collection('locations').document(globals.get_userID()).get() == null) {
+      return firestore.collection('locations').add({
+        'position': point.data,
+        'uid': globals.get_userID()
+      });
+    }
+    else {
+      Firestore.instance.collection('locations').document(globals.get_userID()).setData({"position":point.data,
+        "uid":globals.get_userID()});
+    }
   }
 
   void _updateMarkers(List<DocumentSnapshot> documentList) {
