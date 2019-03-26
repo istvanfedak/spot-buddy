@@ -10,24 +10,6 @@ class updateProfile extends StatefulWidget{
 }
 
 class _updateProfile extends State<updateProfile> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      //return new Scaffold(
-      // appBar: new AppBar(
-      //   title: new Text('Pool Feed')
-      // ),
-        child: ListPage()
-      //);
-    );
-  }
-}
-class ListPage extends StatefulWidget {
-  @override
-  _ListPageState createState() => _ListPageState();
-}
-
-class _ListPageState extends State<ListPage> {
 
   crudMethods crudObj = new crudMethods();
   final formKey = GlobalKey<FormState>();
@@ -39,9 +21,8 @@ class _ListPageState extends State<ListPage> {
   @override
   initState() {
     super.initState();
-    crudObj.getInterest1(globals.get_userID());
-    crudObj.getInterest2(globals.get_userID());
-    crudObj.getInterest3(globals.get_userID());
+    crudObj.getInterest(globals.get_userID());
+
     //_data = getDocument();
   }
 
@@ -75,8 +56,9 @@ class _ListPageState extends State<ListPage> {
         value.isEmpty
             ? 'Interest1 can\'t be empty'
             : null,
-        onSaved: (value) => _interest1 = value, // save email
-        initialValue: globals.interest1,
+        onSaved: (value) => _interest1 = value,
+
+        initialValue: globals.getInterest1()
       ),
       new TextFormField(
         decoration: new InputDecoration(labelText: 'Interest2'),
@@ -84,8 +66,8 @@ class _ListPageState extends State<ListPage> {
         value.isEmpty
             ? 'Interest1 can\'t be empty'
             : null,
-        onSaved: (value) => _interest2 = value, // save email
-        initialValue: globals.interest2
+        onSaved: (value) => _interest2 = value,
+        initialValue: globals.getInterest2()
       ),
       new TextFormField(
         decoration: new InputDecoration(labelText: 'Interest3'),
@@ -93,8 +75,8 @@ class _ListPageState extends State<ListPage> {
         value.isEmpty
             ? 'Interest1 can\'t be empty'
             : null,
-        onSaved: (value) => _interest3 = value, // save email
-        initialValue: globals.interest3
+        onSaved: (value) => _interest3 = value,
+        initialValue: globals.getInterest3()
       ),
     ];
   }

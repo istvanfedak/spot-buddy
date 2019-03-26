@@ -24,19 +24,9 @@ class crudMethods {
     }
   }
 
-  Future<void> getInterest1(String uid) async{
+  Future<void> getInterest(String uid) async{
     DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
-    globals.interest1 = document.data['interest1'];
-  }
-
-  Future<void> getInterest2(String uid) async{
-    DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
-    globals.interest2 = document.data['interest2'];
-  }
-
-  Future<void> getInterest3(String uid) async{
-    DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
-    globals.interest3 = document.data['interest3'];
+    globals.set_interest1(document.data['interest1'],document.data['interest3'],document.data['interest2']);
   }
 
   updateData(selectedDoc, newValues){
