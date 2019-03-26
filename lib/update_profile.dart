@@ -22,7 +22,6 @@ class _updateProfile extends State<updateProfile> {
   initState() {
     super.initState();
     crudObj.getInterest(globals.get_userID());
-
     //_data = getDocument();
   }
 
