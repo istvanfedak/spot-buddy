@@ -10,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
+import 'globals.dart' as globals;
+
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 class Matches extends StatefulWidget {
@@ -35,6 +37,7 @@ class _Matches extends State<Matches> {
   initState() {
     super.initState();
     checkGps();
+    _animateToUser();
   }
 
   var geolocator = Geolocator();
@@ -61,21 +64,23 @@ class _Matches extends State<Matches> {
             zoom: 15
         ),
         onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
+        myLocationEnabled: false,
         mapType: MapType.normal,
         compassEnabled: true,
         trackCameraPosition: true,
       ),
+      /*
       Positioned(
-          bottom: 50,
-          left: 10,
+          bottom: 30,
+          left: 5,
           child:
           FlatButton(
-              child: Icon(Icons.pin_drop, color: Colors.white),
+              child: Text('Find your buddies', style: new TextStyle(fontSize: 15.0, color: Colors.black)),
               color: Colors.green,
-              onPressed: _addGeoPoint
+              onPressed: _animateToUser
           )
       ),
+      */
       Positioned(
           top: 50,
           left: 10,
@@ -120,16 +125,23 @@ class _Matches extends State<Matches> {
         )
     )
     );
+    _addGeoPoint(pos);
   }
 
   // Set GeoLocation Data
-  Future<DocumentReference> _addGeoPoint() async {
-    var pos = await location.getLocation();
+  Future<DocumentReference> _addGeoPoint(pos) async {
+    //var pos = await location.getLocation();
     GeoFirePoint point = geo.point(latitude: pos.latitude, longitude: pos.longitude);
-    return firestore.collection('locations').add({
-      'position': point.data,
-      'name': 'Yay I can be queried!'
-    });
+    if (Firestore.instance.collection('locations').document(globals.get_userID()).get() == null) {
+      return firestore.collection('locations').add({
+        'position': point.data,
+        'uid': globals.get_userID()
+      });
+    }
+    else {
+      Firestore.instance.collection('locations').document(globals.get_userID()).setData({"position":point.data,
+        "uid":globals.get_userID()});
+    }
   }
 
   void _updateMarkers(List<DocumentSnapshot> documentList) {
