@@ -57,7 +57,6 @@ class _updateProfile extends State<updateProfile> {
             ? 'Interest1 can\'t be empty'
             : null,
         onSaved: (value) => _interest1 = value,
-
         initialValue: globals.getInterest1()
       ),
       new TextFormField(
