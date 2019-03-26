@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'crud.dart';
 import 'globals.dart' as globals;
-
-
+import 'crud.dart';
+import 'dart:async';
 
 class updateProfile extends StatefulWidget{
   @override
@@ -11,19 +10,49 @@ class updateProfile extends StatefulWidget{
 }
 
 class _updateProfile extends State<updateProfile> {
-  final formKey = GlobalKey<FormState>();
-  crudMethods crudObj = new crudMethods();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //return new Scaffold(
+      // appBar: new AppBar(
+      //   title: new Text('Pool Feed')
+      // ),
+        child: ListPage()
+      //);
+    );
+  }
+}
+class ListPage extends StatefulWidget {
+  @override
+  _ListPageState createState() => _ListPageState();
+}
 
-  String _password;
+class _ListPageState extends State<ListPage> {
+
+  crudMethods crudObj = new crudMethods();
+  final formKey = GlobalKey<FormState>();
   String _interest1;
   String _interest2;
   String _interest3;
 
+
+  @override
+  initState() {
+    super.initState();
+    crudObj.getInterest1(globals.get_userID());
+    crudObj.getInterest2(globals.get_userID());
+    crudObj.getInterest3(globals.get_userID());
+    //_data = getDocument();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('My SpotBuddy'),
+        title: Text('SpotBuddy'),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -31,7 +60,7 @@ class _updateProfile extends State<updateProfile> {
           key: formKey,
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: buildInputs()+ buildSubmitButtons(),
+            children: buildInputs() + buildSubmitButtons(),
           ),
         ),
       ),
@@ -41,55 +70,55 @@ class _updateProfile extends State<updateProfile> {
   List<Widget> buildInputs() {
     return [
       new TextFormField(
-        decoration: new InputDecoration(labelText: 'Password'),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-        onSaved: (value) => _password = value, // save email
+        decoration: new InputDecoration(labelText: 'Interest1'),
+        validator: (value) =>
+        value.isEmpty
+            ? 'Interest1 can\'t be empty'
+            : null,
+        onSaved: (value) => _interest1 = value, // save email
+        initialValue: globals.interest1,
       ),
       new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest 1'),
+        decoration: new InputDecoration(labelText: 'Interest2'),
         validator: (value) =>
-        value.isEmpty ? 'First interest can\'t be empty' : null,
-        obscureText: true,
-        onSaved: (value) => _interest1 = value,
+        value.isEmpty
+            ? 'Interest1 can\'t be empty'
+            : null,
+        onSaved: (value) => _interest2 = value, // save email
+        initialValue: globals.interest2
       ),
       new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest 2'),
+        decoration: new InputDecoration(labelText: 'Interest3'),
         validator: (value) =>
-        value.isEmpty ? 'Second interest can\'t be empty' : null,
-        obscureText: true,
-        onSaved: (value) => _interest2 = value,
-      ),
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest 3'),
-        validator: (value) =>
-        value.isEmpty ? 'Third interest can\'t be empty' : null,
-        obscureText: true,
-        onSaved: (value) => _interest3 = value,
+        value.isEmpty
+            ? 'Interest1 can\'t be empty'
+            : null,
+        onSaved: (value) => _interest3 = value, // save email
+        initialValue: globals.interest3
       ),
     ];
   }
-  List<Widget> buildSubmitButtons(){
-      return [
-        new RaisedButton(
-            child: new Text('Update', style: new TextStyle(fontSize: 20.0)),
-            onPressed: () {
-              //validateAndSubmit();
-            }
-        ),
-      ];
+
+  List<Widget> buildSubmitButtons() {
+    return [
+      new FlatButton(
+        child: new Text(
+            'Create an account', style: new TextStyle(fontSize: 20)),
+        onPressed: null
+      ),
+    ];
   }
-  void addToDatabase() async {
+  void updateData() async {
       Map <String, dynamic> userData = {
-        'password': this._password,
         'interest1': this._interest1,
         'interest2': this._interest2,
         'interest3': this._interest3,
       };
-      Firestore.instance.collection('users').document(globals.get_userID()).setData({"password":_password,"interest1": _interest1,
-        "interest2": _interest2, "interest": _interest3});
-      //crudObj.addData(userData).catchError((e) {
-        //print(e);
-      //});
+      crudObj.updateData(globals.get_userID(),userData).catchError((e) {
+        print(e);
+      });
       //widget.onSignedIn();
+
   }
 }
+
