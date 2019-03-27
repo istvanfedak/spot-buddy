@@ -26,7 +26,7 @@ class crudMethods {
 
   Future<void> getInterest(String uid) async{
     DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
-    globals.set_interest1(document.data['interest1'],document.data['interest3'],document.data['interest2']);
+    globals.set_interests(document.data['interest1'],document.data['interest2'],document.data['interest3']);
   }
 
   updateData(selectedDoc, newValues){

@@ -21,7 +21,7 @@ class _updateProfile extends State<updateProfile> {
   @override
   initState() {
     super.initState();
-    //crudObj.getInterest(globals.get_userID());
+    //crudObj.getInterest(globals.get_userID()); ... moved this to home page, now interests load immediately upon entering update profile
     //_data = getDocument();
   }
 

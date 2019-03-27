@@ -8,7 +8,7 @@ String interest1 = "";
 String interest2 = "";
 String interest3 = "";
 
-void set_interest1(String i1,String i2,String i3)
+void set_interests(String i1,String i2,String i3)
 {
   interest1 = i1;
   interest2 = i2;
