@@ -25,7 +25,27 @@ class _updateProfile extends State<updateProfile> {
     //_data = getDocument();
   }
 
-
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Profile Updated"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Okay"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,21 +103,26 @@ class _updateProfile extends State<updateProfile> {
     return [
       new FlatButton(
         child: new Text(
-            'Create an account', style: new TextStyle(fontSize: 20)),
-        onPressed: null
+            'Update', style: new TextStyle(fontSize: 20)),
+        onPressed: updateData
       ),
     ];
   }
   void updateData() async {
+    final form = formKey.currentState;
+    if(form.validate()) {
+      form.save();
       Map <String, dynamic> userData = {
         'interest1': this._interest1,
         'interest2': this._interest2,
         'interest3': this._interest3,
       };
-      crudObj.updateData(globals.get_userID(),userData).catchError((e) {
-        print(e);
-      });
-      //widget.onSignedIn();
+      print(this._interest1);
+        crudObj.updateData(globals.get_userID(), userData).catchError((e) {
+          print(e);
+        });
+      }
+     _showDialog();
 
   }
 }

@@ -29,7 +29,7 @@ class crudMethods {
     globals.set_interests(document.data['interest1'],document.data['interest2'],document.data['interest3']);
   }
 
-  updateData(selectedDoc, newValues){
+  Future<void> updateData(selectedDoc, newValues) async{
     Firestore.instance.collection('users').document(selectedDoc).updateData(newValues).catchError((e) {
       print(e);
       });
