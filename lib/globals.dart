@@ -3,7 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 Color appColor = Colors.red;
 String appName = "SpotBuddy";
-String _uid = "";
+String uid = "";
 String interest1 = "";
 String interest2 = "";
 String interest3 = "";
@@ -28,13 +28,13 @@ String getInterest3()
   return interest3;
 }
 
-void set_userID(String uid)
+void set_userID(String u)
 {
-  _uid = uid;
+  uid = u;
 }
 String get_userID()
 {
-  return _uid;
+  return uid;
 }
 bool cOut = true;
 bool logOut = true;

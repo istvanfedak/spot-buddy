@@ -6,6 +6,8 @@ import 'update_profile.dart';
 import 'matches2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'crud.dart';
+import 'globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
   HomePage({this.onSignedOut,this.auth});
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage>{
   Feed feed;
   updateProfile updateProf;
   Matches matches;
+  crudMethods crudObj = new crudMethods();
 
 
   @override
@@ -44,7 +47,8 @@ class _HomePageState extends State<HomePage>{
     currentPage = feed;
     currentTab = 0;
     pages = [feed,updateProf,matches];
-
+    if (globals.uid != "") {
+    crudObj.getInterest(globals.get_userID()); }
     super.initState();
   }
 
