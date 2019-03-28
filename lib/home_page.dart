@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage>{
     currentPage = Feed();
   }
 
-  
+
   void moveToFeed()
   {
     setState(() {

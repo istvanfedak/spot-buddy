@@ -25,6 +25,7 @@ class _Matches extends State<Matches> {
 
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
+  var geolocator = Geolocator();
 
   // Stateful Data
   BehaviorSubject<double> radius = BehaviorSubject(seedValue: 100.0);
@@ -33,14 +34,14 @@ class _Matches extends State<Matches> {
   // Subscription
   StreamSubscription subscription;
 
+
   @override
   initState() {
     super.initState();
     checkGps();
-    _animateToUser();
+    //_animateToUser();
   }
 
-  var geolocator = Geolocator();
 
   checkGps() async {
     GeolocationStatus geolocationStatus  = await geolocator.checkGeolocationPermissionStatus();
@@ -69,7 +70,7 @@ class _Matches extends State<Matches> {
         compassEnabled: true,
         trackCameraPosition: true,
       ),
-      /*
+
       Positioned(
           bottom: 30,
           left: 5,
@@ -80,7 +81,7 @@ class _Matches extends State<Matches> {
               onPressed: _animateToUser
           )
       ),
-      */
+      
       Positioned(
           top: 50,
           left: 10,
