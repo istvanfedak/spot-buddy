@@ -30,34 +30,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
-  int currentTab = 0;
-  List<Widget> pages;
+  int currentTab;
   Widget currentPage;
-  Feed feed;
-  updateProfile updateProf;
-  Matches matches;
   crudMethods crudObj = new crudMethods();
 
 
   @override
   void initState(){
-    feed = Feed();
-    updateProf = updateProfile();
-    matches = Matches();
-    currentPage = feed;
-    currentTab = 0;
-    pages = [feed,updateProf,matches];
+    super.initState();
     if (globals.uid != "") {
-    crudObj.getInterest(globals.get_userID()); } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
+      crudObj.getInterest(globals.get_userID()); } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
     else {
       _signOut(); } //else, to avoid error, if in homepage but uid cannot be found (empty), log user out and force to sign in again which will set the uid once again
-    super.initState();
+    currentTab = 0;
+    currentPage = Feed();
   }
 
+  
   void moveToFeed()
   {
     setState(() {
-      currentPage = feed;
+      currentPage = Feed();
       currentTab = 0;
     });
 
@@ -66,7 +59,7 @@ class _HomePageState extends State<HomePage>{
   void moveToUpdate()
   {
     setState(() {
-      currentPage = updateProf;
+      currentPage = updateProfile();
       currentTab = 1;
     });
 
@@ -74,7 +67,7 @@ class _HomePageState extends State<HomePage>{
   void moveToMatches()
   {
     setState(() {
-      currentPage = matches;
+      currentPage = Matches();
       currentTab = 2;
     });
 
@@ -106,13 +99,15 @@ class _HomePageState extends State<HomePage>{
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentTab,
+        /*
         onTap: (int index){
           setState(() {
             //print(index);
-            currentTab = index;
-            currentPage = feed;
+            //currentTab = index;
+            //currentPage = Feed();
           });
         },
+        */
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: new IconButton(
