@@ -14,6 +14,10 @@ import 'globals.dart' as globals;
 
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
+//COULD EVENTUALLY MAKE IT THAT GOOGLE MAPS INITIAL CAMERA POSITION
+//USES USERS LAST KNOWN LOCATION IN DATABASE SO ANIMATE TO USER IS
+//NOT SO ABRUPT. (LAT/LON WOULD BE QUERIED FOR IN INITSTATE IF EXISTS)
+
 class Matches extends StatefulWidget {
   @override
   _Matches createState() => new _Matches();
@@ -39,7 +43,7 @@ class _Matches extends State<Matches> {
   initState() {
     super.initState();
     checkGps();
-    //_animateToUser();
+    //_animateToUser(); ... initState was improper place (only once), needed to put in build where it is built(done) every time
   }
 
 
@@ -56,7 +60,9 @@ class _Matches extends State<Matches> {
     }
   }
 
-  build(context) {
+  @override
+  Widget build(BuildContext context) {
+    _animateToUser();
     return Stack(children: [
 
       GoogleMap(
@@ -70,7 +76,7 @@ class _Matches extends State<Matches> {
         compassEnabled: true,
         trackCameraPosition: true,
       ),
-
+      /*
       Positioned(
           bottom: 30,
           left: 5,
@@ -81,7 +87,7 @@ class _Matches extends State<Matches> {
               onPressed: _animateToUser
           )
       ),
-
+      */
       Positioned(
           top: 50,
           left: 10,
@@ -200,10 +206,12 @@ class _Matches extends State<Matches> {
     });
   }
 
+
   @override
   dispose() {
     subscription.cancel();
     super.dispose();
   }
+
 
 }
