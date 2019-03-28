@@ -25,14 +25,14 @@ class Matches extends StatefulWidget {
 
 class _Matches extends State<Matches> {
   GoogleMapController mapController;
-  Location location = new Location();
+  Location location;
 
-  Firestore firestore = Firestore.instance;
-  Geoflutterfire geo = Geoflutterfire();
-  var geolocator = Geolocator();
+  Firestore firestore;
+  Geoflutterfire geo;
+  Geolocator geolocator;
 
   // Stateful Data
-  BehaviorSubject<double> radius = BehaviorSubject(seedValue: 100.0);
+  BehaviorSubject<double> radius;
   Stream<dynamic> query;
 
   // Subscription
@@ -42,12 +42,17 @@ class _Matches extends State<Matches> {
   @override
   initState() {
     super.initState();
-    checkGps();
+    location = new Location();
+    firestore = Firestore.instance;
+    geo = Geoflutterfire();
+    geolocator = Geolocator();
+    radius = BehaviorSubject(seedValue: 100.0);
+    _checkGps();
     //_animateToUser(); ... initState was improper place (only once), needed to put in build where it is built(done) every time
   }
 
 
-  checkGps() async {
+  _checkGps() async {
     GeolocationStatus geolocationStatus  = await geolocator.checkGeolocationPermissionStatus();
     if (geolocationStatus == GeolocationStatus.granted) {
       print("Success, user permission granted");
