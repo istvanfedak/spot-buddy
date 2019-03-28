@@ -81,7 +81,7 @@ class _Matches extends State<Matches> {
               onPressed: _animateToUser
           )
       ),
-      
+
       Positioned(
           top: 50,
           left: 10,
