@@ -67,7 +67,7 @@ class _Matches extends State<Matches> {
 
   @override
   Widget build(BuildContext context) {
-    //_animateToUser(); ... old way
+    _animateToUser();
     return Stack(children: [
 
       GoogleMap(
@@ -76,7 +76,7 @@ class _Matches extends State<Matches> {
             zoom: 15
         ),
         onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
+        myLocationEnabled: false,
         mapType: MapType.normal,
         compassEnabled: true,
         trackCameraPosition: true,
@@ -93,18 +93,6 @@ class _Matches extends State<Matches> {
           )
       ),
       */
-
-      Positioned(
-          bottom: 30,
-          left: 5,
-          child:
-          FlatButton(
-              child: Icon(Icons.pin_drop),
-              color: Colors.green,
-              onPressed: _addGeoPoint,
-          )
-      ),
-
       Positioned(
           top: 50,
           left: 10,
@@ -149,12 +137,12 @@ class _Matches extends State<Matches> {
         )
     )
     );
-    //_addGeoPoint(pos);
+    _addGeoPoint(pos);
   }
 
   // Set GeoLocation Data
-  Future<DocumentReference> _addGeoPoint() async {
-    var pos = await location.getLocation();
+  Future<DocumentReference> _addGeoPoint(pos) async {
+    //var pos = await location.getLocation();
     GeoFirePoint point = geo.point(latitude: pos.latitude, longitude: pos.longitude);
     if (Firestore.instance.collection('locations').document(globals.get_userID()).get() == null) {
       return firestore.collection('locations').add({
