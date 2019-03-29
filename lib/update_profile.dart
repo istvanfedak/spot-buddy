@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'globals.dart' as globals;
 import 'crud.dart';
 import 'dart:async';
+import 'interests.dart' as _interests;
 
 class updateProfile extends StatefulWidget{
   @override
@@ -55,7 +56,7 @@ class _updateProfile extends State<updateProfile> {
         title: Text('SpotBuddy'),
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        margin: EdgeInsets.all(40.0),
         child: new Form(
           key: formKey,
           child: new Column(
@@ -69,32 +70,72 @@ class _updateProfile extends State<updateProfile> {
 
   List<Widget> buildInputs() {
     return [
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest1'),
-        validator: (value) =>
-        value.isEmpty
-            ? 'Interest1 can\'t be empty'
-            : null,
-        onSaved: (value) => _interest1 = value,
-        initialValue: globals.getInterest1()
+      Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Text("Interest 1: ",
+          style: TextStyle(fontSize: 18.0),
+        ),
       ),
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest2'),
-        validator: (value) =>
-        value.isEmpty
-            ? 'Interest1 can\'t be empty'
-            : null,
-        onSaved: (value) => _interest2 = value,
-        initialValue: globals.getInterest2()
+      new DropdownButton<String>(
+        items: _interests.interests.map((String dropDownStringItem) {
+          return new DropdownMenuItem<String>(
+            child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+            value: dropDownStringItem,
+          );
+        }).toList(),
+        onChanged: (String newValueSelected) {
+          setState(() {
+            //this._ = newValueSelected;
+            this._interest1 = newValueSelected;
+          });
+        },
+        value: _interest1,
+        //hint: new Text("Select mode"),
       ),
-      new TextFormField(
-        decoration: new InputDecoration(labelText: 'Interest3'),
-        validator: (value) =>
-        value.isEmpty
-            ? 'Interest1 can\'t be empty'
-            : null,
-        onSaved: (value) => _interest3 = value,
-        initialValue: globals.getInterest3()
+      Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Text("Interest 2: ",
+          style: TextStyle(fontSize: 18.0),
+        ),
+      ),
+      new DropdownButton<String>(
+        items: _interests.interests.map((String dropDownStringItem) {
+          return new DropdownMenuItem<String>(
+            value: dropDownStringItem,
+            child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+          );
+        }).toList(),
+        onChanged: (String newValueSelected) {
+          setState(() {
+            //this._ = newValueSelected;
+            this._interest2 = newValueSelected;
+          });
+        },
+        value: _interest2,
+        //hint: new Text("Select mode"),
+      ),
+
+      Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Text("Interest 3: ",
+            style: TextStyle(fontSize: 18.0)),
+
+      ),
+      new DropdownButton<String>(
+        items: _interests.interests.map((String dropDownStringItem) {
+          return new DropdownMenuItem<String>(
+            value: dropDownStringItem,
+            child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+          );
+        }).toList(),
+        onChanged: (String newValueSelected) {
+          setState(() {
+            //this._ = newValueSelected;
+            this._interest3 = newValueSelected;
+          });
+        },
+        value: _interest3,
+        //hint: new Text("Select mode"),
       ),
     ];
   }
@@ -126,4 +167,3 @@ class _updateProfile extends State<updateProfile> {
 
   }
 }
-

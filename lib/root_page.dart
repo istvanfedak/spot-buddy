@@ -19,7 +19,6 @@ enum AuthStatus {
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
-
   @override
   void initState() {
     widget.auth.currentUser().then((userId) {

@@ -4,6 +4,7 @@ import 'AuthProvider.dart';
 import 'auth.dart';
 import 'crud.dart';
 import 'globals.dart' as globals;
+import 'interests.dart' as _interests;
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.onSignedIn,this.auth});
@@ -23,11 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   crudMethods crudObj = new crudMethods();
 
+  var _currentItemSelected = 'golf';
+
   String _email;
   String _password;
-  String _interest1;
-  String _interest2;
-  String _interest3;
+  String _interest1 = 'Astronomy';
+  String _interest2 = 'Astronomy';
+  String _interest3 = 'Astronomy';
   FormType _formType = FormType.login;
 
   bool validateAndSave() {
@@ -112,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
         title: Text('SpotBuddy'),
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        margin: EdgeInsets.all(20),
         child: new Form(
           key: formKey,
           child: new Column(
@@ -154,24 +157,77 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: true,
           onSaved: (value) => _password = value,
         ),
-        new TextFormField(
-          decoration: new InputDecoration(labelText: 'Interest 1'),
-          validator: (value) =>
-          value.isEmpty ? 'Interest 1 can\'t be empty' : null,
-          onSaved: (value) => _interest1 = value,
+
+        Padding(
+            padding: EdgeInsets.all(40.0),
+            child: Text("Interest 1: ",
+            style: TextStyle(fontSize: 18.0)),
+
+    ),
+
+        new DropdownButton<String>(
+          items: _interests.interests.map((String dropDownStringItem) {
+              return new DropdownMenuItem<String>(
+              child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+              value: dropDownStringItem,
+            );
+          }).toList(),
+          onChanged: (String newValueSelected) {
+            setState(() {
+              //this._ = newValueSelected;
+              this._interest1 = newValueSelected;
+            });
+            },
+          value: _interest1,
+          //hint: new Text("Select mode"),
         ),
-        new TextFormField(
-          decoration: new InputDecoration(labelText: 'Interest 2'),
-          validator: (value) =>
-          value.isEmpty ? 'Interest 2 can\'t be empty' : null,
-          onSaved: (value) => _interest2 = value,
+        Padding(
+            padding: EdgeInsets.all(40.0),
+            child: Text("Interest 2: ",
+            style: TextStyle(fontSize: 18.0),
+          ),
         ),
-        new TextFormField(
-          decoration: new InputDecoration(labelText: 'Interest 3'),
-          validator: (value) =>
-          value.isEmpty ? 'Interest 3 can\'t be empty' : null,
-          onSaved: (value) => _interest3 = value,
+        new DropdownButton<String>(
+          items: _interests.interests.map((String dropDownStringItem) {
+            return new DropdownMenuItem<String>(
+              value: dropDownStringItem,
+              child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+            );
+          }).toList(),
+          onChanged: (String newValueSelected) {
+            setState(() {
+              //this._ = newValueSelected;
+              this._interest2 = newValueSelected;
+            });
+          },
+          value: _interest2,
+          //hint: new Text("Select mode"),
         ),
+
+        Padding(
+            padding: EdgeInsets.all(40.0),
+            child: Text("Interest 3: ",
+            style: TextStyle(fontSize: 18.0)),
+
+        ),
+        new DropdownButton<String>(
+          items: _interests.interests.map((String dropDownStringItem) {
+            return new DropdownMenuItem<String>(
+              value: dropDownStringItem,
+              child: new SizedBox(width: 200.0, child: new Text(dropDownStringItem)),
+            );
+          }).toList(),
+          onChanged: (String newValueSelected) {
+            setState(() {
+              //this._ = newValueSelected;
+              this._interest3 = newValueSelected;
+            });
+          },
+          value: _interest3,
+          //hint: new Text("Select mode"),
+        ),
+
+
       ];
     }
   }
@@ -211,6 +267,7 @@ class _LoginPageState extends State<LoginPage> {
       ];
     }
   }
+
   void addToDatabase() async {
     if(_formType != FormType.login) {
       Map <String, dynamic> userData = {

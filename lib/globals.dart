@@ -8,6 +8,8 @@ String interest1 = "";
 String interest2 = "";
 String interest3 = "";
 
+var _interests = ['soccer', 'baseball','golf'];
+
 void set_interests(String i1,String i2,String i3)
 {
   interest1 = i1;
