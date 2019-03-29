@@ -84,13 +84,6 @@ class _ListPageState extends State<ListPage> {
                         ],
                       ),
                     );
-
-                    /*return ListTile(
-                      title: Text(snapshot.data[index].data["date"]), //sub in fname, lname etc
-                      subtitle: Text(snapshot.data[index].data["start_address"]),
-                      //subtitle: Text(snapshot.data[index].data["end_address"]),
-
-                    );*/
                   });
             }
           }),
@@ -120,13 +113,18 @@ class _DetailPageState extends State<DetailPage>{
               Text('Interest 1: ' + widget.user.data["interest1"]),
               Text('Interest 2: '+ widget.user.data["interest2"]),
               Text('Interest 3: ' + widget.user.data["interest3"]),
-
+              ButtonTheme.bar( // make buttons use the appropriate styles for cards
+               child: ButtonBar(
+               children: <Widget>[
+                FlatButton(
+                  child: const Text('Request Match'),
+                  onPressed: () => null
+                ),
+                ],
+                ),
+               ),
             ],
           ),
-          /*child: ListTile(
-          title: Text(widget.ride.data["date"]),
-          subtitle: Text(widget.ride.data["start_address"]),
-        ),*/
         ),
       ),
     );
