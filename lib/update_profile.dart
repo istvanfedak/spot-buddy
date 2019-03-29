@@ -17,7 +17,7 @@ class _updateProfile extends State<updateProfile> {
   String _interest1;
   String _interest2;
   String _interest3;
-
+  String _username;
 
   @override
   initState() {
@@ -70,8 +70,15 @@ class _updateProfile extends State<updateProfile> {
 
   List<Widget> buildInputs() {
     return [
+      new TextFormField(
+        decoration: new InputDecoration(labelText: 'Name'),
+        validator: (value) =>
+        value.isEmpty ? 'Password can\'t be empty' : null,
+        onSaved: (value) => _username = value,
+        initialValue: globals.getName(),
+      ),
       Padding(
-        padding: EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(20.0),
         child: Text("Interest 1: ",
           style: TextStyle(fontSize: 18.0),
         ),
@@ -93,7 +100,7 @@ class _updateProfile extends State<updateProfile> {
         //hint: new Text("Select mode"),
       ),
       Padding(
-        padding: EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(20.0),
         child: Text("Interest 2: ",
           style: TextStyle(fontSize: 18.0),
         ),
@@ -116,7 +123,7 @@ class _updateProfile extends State<updateProfile> {
       ),
 
       Padding(
-        padding: EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(20.0),
         child: Text("Interest 3: ",
             style: TextStyle(fontSize: 18.0)),
 
@@ -157,6 +164,7 @@ class _updateProfile extends State<updateProfile> {
         'interest1': this._interest1,
         'interest2': this._interest2,
         'interest3': this._interest3,
+        'username' : this._username,
       };
       print(this._interest1);
         crudObj.updateData(globals.get_userID(), userData).catchError((e) {

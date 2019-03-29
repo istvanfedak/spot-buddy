@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   String _interest1 = 'Astronomy';
   String _interest2 = 'Astronomy';
   String _interest3 = 'Astronomy';
+  String _username;
   FormType _formType = FormType.login;
 
   bool validateAndSave() {
@@ -157,6 +158,12 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: true,
           onSaved: (value) => _password = value,
         ),
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Name'),
+          validator: (value) =>
+          value.isEmpty ? 'Password can\'t be empty' : null,
+          onSaved: (value) => _username = value,
+        ),
 
         Padding(
             padding: EdgeInsets.all(40.0),
@@ -276,6 +283,7 @@ class _LoginPageState extends State<LoginPage> {
         'interest1': this._interest1,
         'interest2': this._interest2,
         'interest3': this._interest3,
+        'username' :this._username,
       };
       crudObj.addData(userData).catchError((e) {
         print(e);

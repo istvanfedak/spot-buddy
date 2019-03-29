@@ -39,7 +39,10 @@ class _HomePageState extends State<HomePage>{
   void initState(){
     super.initState();
     if (globals.uid != "") {
-      crudObj.getInterest(globals.get_userID()); } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
+      crudObj.getInterest(globals.get_userID());
+      crudObj.getName(globals.get_userID());
+    } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
+
     else {
       _signOut(); } //else, to avoid error, if in homepage but uid cannot be found (empty), log user out and force to sign in again which will set the uid once again
     currentTab = 0;

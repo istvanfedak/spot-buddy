@@ -7,14 +7,22 @@ String uid = "";
 String interest1 = "";
 String interest2 = "";
 String interest3 = "";
-
-var _interests = ['soccer', 'baseball','golf'];
+String name = "";
 
 void set_interests(String i1,String i2,String i3)
 {
   interest1 = i1;
   interest2 = i2;
   interest3 = i3;
+}
+void set_Name(String n1)
+{
+  name = n1;
+}
+
+String getName()
+{
+  return name;
 }
 
 String getInterest1()
