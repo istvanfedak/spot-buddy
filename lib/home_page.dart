@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage>{
   void initState(){
     super.initState();
     if (globals.uid != "") {
-      crudObj.getInterest(globals.get_userID());
+      crudObj.getInterest(globals.get_userID()); //this needs to be done again somehow when interests are updated
       crudObj.getName(globals.get_userID());
     } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
 

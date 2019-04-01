@@ -170,13 +170,37 @@ class _Matches extends State<Matches> {
     print(remove);
     print(documentList);
     mapController.clearMarkers();
-    documentList.forEach((DocumentSnapshot document) {
+    documentList.forEach((DocumentSnapshot document) async {
+      var id = document.documentID;
+      DocumentSnapshot doc = await Firestore.instance.collection("users").document(id).get();
+      int index = 0;
+      String markerPrint = doc.data['username'] + ": ";
+      if(iList.contains(doc.data['interest1'])) {
+        index++;
+        markerPrint = index.toString() + ":" + index.toString() + " ";//doc.data['interest1'] + " ";
+      }
+      if(iList.contains(doc.data['interest2'])) {
+        index++;
+        markerPrint = markerPrint + index.toString() + ":" + index.toString() + " ";//doc.data['interest2'] + " ";
+      }
+      if(iList.contains(doc.data['interest3'])) {
+        index++;
+        markerPrint = markerPrint + index.toString() + ":" + index.toString();//doc.data['interest3'] + " ";
+      }
       GeoPoint pos = document.data['position']['geopoint'];
       double distance = document.data['distance'];
+      String distancePrint;
+      if(distance == 0.0)
+        {
+          distancePrint = "You are here";
+        }
+        else {
+            distancePrint = "$distance kilometers away from you";
+        }
       var marker = MarkerOptions(
           position: LatLng(pos.latitude, pos.longitude),
           icon: BitmapDescriptor.defaultMarker,
-          infoWindowText: InfoWindowText('Magic Marker', '$distance kilometers from query center')
+          infoWindowText: InfoWindowText(markerPrint, distancePrint)
       );
 
       //mapController.addMarker(marker);

@@ -71,7 +71,7 @@ class _updateProfile extends State<updateProfile> {
   List<Widget> buildInputs() {
     return [
       new TextFormField(
-        decoration: new InputDecoration(labelText: 'Name'),
+        decoration: new InputDecoration(labelText: 'Name'),  //prepopulate of name not working, also add init value of interests and update in globals
         validator: (value) =>
         value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _username = value,
@@ -152,7 +152,11 @@ class _updateProfile extends State<updateProfile> {
       new FlatButton(
         child: new Text(
             'Update', style: new TextStyle(fontSize: 20)),
-        onPressed: updateData
+        onPressed: () {
+          updateData();
+          globals.set_Name(_username);
+          globals.set_interests(_interest1, _interest2, _interest3);
+        }
       ),
     ];
   }
