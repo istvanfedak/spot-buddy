@@ -38,6 +38,10 @@ class _Matches extends State<Matches> {
   // Subscription
   StreamSubscription subscription;
 
+  List<String> iList = new List(3);
+  List<String> cList = new List(3);
+  var newref;
+
 
   @override
   initState() {
@@ -49,6 +53,10 @@ class _Matches extends State<Matches> {
     radius = BehaviorSubject(seedValue: 100.0);
     _checkGps();
     //_animateToUser(); ... initState was improper place (only once), needed to put in build where it is built(done) every time
+    iList[0] = globals.getInterest1();
+    iList[1] = globals.getInterest2();
+    iList[2] = globals.getInterest3();
+    newref = Firestore.instance.collection("locations");
   }
 
 
@@ -173,20 +181,61 @@ class _Matches extends State<Matches> {
     });
   }
 
+
+
   _startQuery() async {
     // Get users location
     var pos = await location.getLocation();
     double lat = pos.latitude;
     double lng = pos.longitude;
 
-
     // Make a referece to firestore
-    var ref = firestore.collection('locations');
+    // NEED TO MAKE REF ONLY REFER TO THE COLLECTION OF LOCATIONS OF USERS WITH MATCHING INTERESTS
     GeoFirePoint center = geo.point(latitude: lat, longitude: lng);
 
-    // subscribe to query
+
+    QuerySnapshot querySnapshot = await newref.getDocuments();
+    var list = querySnapshot.documents;
+
+    _f(DocumentSnapshot d) async {
+      String u = d.documentID;
+      DocumentSnapshot document = await Firestore.instance.collection("users")
+          .document(u)
+          .get();
+
+      if (iList.contains(document.data['interest1'])) {
+        cList[0] = document.data['interest1'];
+      }
+      else {
+        cList[0] = null;
+      }
+
+      if (iList.contains(document.data['interest2'])) {
+        cList[1] = document.data['interest2'];
+      }
+      else {
+        cList[1] = null;
+      }
+
+      if (iList.contains(document.data['interest3'])) {
+        cList[2] = document.data['interest3'];
+      }
+      else {
+        cList[2] = null;
+      }
+
+      if (cList[0] == null && cList[1] == null && cList[2] == null) {
+        newref.document(u).delete();
+      }
+    }
+
+
+    list.forEach(_f);
+
+
+    // subscribe to query... will not use ref anymore, rather newref
     subscription = radius.switchMap((rad) {
-      return geo.collection(collectionRef: ref).within(
+      return geo.collection(collectionRef: newref).within(
           center: center,
           radius: rad,
           field: 'position',
@@ -217,6 +266,5 @@ class _Matches extends State<Matches> {
     subscription.cancel();
     super.dispose();
   }
-
 
 }
