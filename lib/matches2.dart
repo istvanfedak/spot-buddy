@@ -253,7 +253,7 @@ class _Matches extends State<Matches> {
       );
     }).listen(_updateMarkers); }
 
-    
+
   _updateQuery(value) {
     final zoomMap = {
       100.0: 12.0,
