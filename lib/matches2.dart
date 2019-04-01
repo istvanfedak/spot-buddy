@@ -177,15 +177,15 @@ class _Matches extends State<Matches> {
       String markerPrint = doc.data['username'] + ": ";
       if(iList.contains(doc.data['interest1'])) {
         index++;
-        markerPrint = index.toString() + ":" + index.toString() + " ";//doc.data['interest1'] + " ";
+        markerPrint = markerPrint + doc.data['interest1'] + " "; //index.toString() + ":" + index.toString() + " ";
       }
       if(iList.contains(doc.data['interest2'])) {
         index++;
-        markerPrint = markerPrint + index.toString() + ":" + index.toString() + " ";//doc.data['interest2'] + " ";
+        markerPrint = markerPrint + doc.data['interest2'] + " "; //markerPrint + index.toString() + ":" + index.toString() + " ";
       }
       if(iList.contains(doc.data['interest3'])) {
         index++;
-        markerPrint = markerPrint + index.toString() + ":" + index.toString();//doc.data['interest3'] + " ";
+        markerPrint = markerPrint + doc.data['interest3']; //markerPrint + index.toString() + ":" + index.toString();
       }
       GeoPoint pos = document.data['position']['geopoint'];
       double distance = document.data['distance'];
@@ -205,7 +205,7 @@ class _Matches extends State<Matches> {
 
       //mapController.addMarker(marker);
 
-      if( !(remove.contains(document.documentID)) ) {
+      if( !(remove.contains(id)) ) {
       mapController.addMarker(marker); }
 
     });
@@ -300,5 +300,6 @@ class _Matches extends State<Matches> {
     subscription.cancel();
     super.dispose();
   }
+
 
 }
