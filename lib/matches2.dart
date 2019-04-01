@@ -42,6 +42,8 @@ class _Matches extends State<Matches> {
   List<String> cList = new List(3);
   var newref;
 
+  List<String> remove = new List();
+
 
   @override
   initState() {
@@ -176,8 +178,11 @@ class _Matches extends State<Matches> {
           infoWindowText: InfoWindowText('Magic Marker', '$distance kilometers from query center')
       );
 
+      //mapController.addMarker(marker);
 
-      mapController.addMarker(marker);
+      if( !(remove.contains(document.documentID)) ) {
+      mapController.addMarker(marker); }
+
     });
   }
 
@@ -207,25 +212,26 @@ class _Matches extends State<Matches> {
         cList[0] = document.data['interest1'];
       }
       else {
-        cList[0] = null;
+        cList[0] = "none";
       }
 
       if (iList.contains(document.data['interest2'])) {
         cList[1] = document.data['interest2'];
       }
       else {
-        cList[1] = null;
+        cList[1] = "none";
       }
 
       if (iList.contains(document.data['interest3'])) {
         cList[2] = document.data['interest3'];
       }
       else {
-        cList[2] = null;
+        cList[2] = "none";
       }
 
-      if (cList[0] == null && cList[1] == null && cList[2] == null) {
-        newref.document(u).delete();
+      if (cList[0] == "none" && cList[1] == "none" && cList[2] == "none") {
+        //newref.document(u).delete();
+        remove.add(u);
       }
     }
 
