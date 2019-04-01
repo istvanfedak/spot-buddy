@@ -167,6 +167,7 @@ class _Matches extends State<Matches> {
   }
 
   void _updateMarkers(List<DocumentSnapshot> documentList) {
+    print(remove);
     print(documentList);
     mapController.clearMarkers();
     documentList.forEach((DocumentSnapshot document) {
@@ -186,6 +187,39 @@ class _Matches extends State<Matches> {
     });
   }
 
+  _f(DocumentSnapshot d) async {
+    String u = d.documentID;
+    DocumentSnapshot document = await Firestore.instance.collection("users")
+        .document(u)
+        .get();
+
+    if (iList.contains(document.data['interest1'])) {
+      cList[0] = document.data['interest1'];
+    }
+    else {
+      cList[0] = "none";
+    }
+
+    if (iList.contains(document.data['interest2'])) {
+      cList[1] = document.data['interest2'];
+    }
+    else {
+      cList[1] = "none";
+    }
+
+    if (iList.contains(document.data['interest3'])) {
+      cList[2] = document.data['interest3'];
+    }
+    else {
+      cList[2] = "none";
+    }
+
+    if (cList[0] == "none" && cList[1] == "none" && cList[2] == "none") {
+      //newref.document(u).delete();
+      remove.add(u);
+      print(remove);
+    }
+  }
 
 
   _startQuery() async {
@@ -202,43 +236,13 @@ class _Matches extends State<Matches> {
     QuerySnapshot querySnapshot = await newref.getDocuments();
     var list = querySnapshot.documents;
 
-    _f(DocumentSnapshot d) async {
-      String u = d.documentID;
-      DocumentSnapshot document = await Firestore.instance.collection("users")
-          .document(u)
-          .get();
-
-      if (iList.contains(document.data['interest1'])) {
-        cList[0] = document.data['interest1'];
-      }
-      else {
-        cList[0] = "none";
-      }
-
-      if (iList.contains(document.data['interest2'])) {
-        cList[1] = document.data['interest2'];
-      }
-      else {
-        cList[1] = "none";
-      }
-
-      if (iList.contains(document.data['interest3'])) {
-        cList[2] = document.data['interest3'];
-      }
-      else {
-        cList[2] = "none";
-      }
-
-      if (cList[0] == "none" && cList[1] == "none" && cList[2] == "none") {
-        //newref.document(u).delete();
-        remove.add(u);
-      }
+    for(DocumentSnapshot d in list) {
+     await _f(d);
     }
+    _subscription(center);
+  }
 
-
-    list.forEach(_f);
-
-
+    _subscription(center) {
     // subscribe to query... will not use ref anymore, rather newref
     subscription = radius.switchMap((rad) {
       return geo.collection(collectionRef: newref).within(
@@ -247,9 +251,9 @@ class _Matches extends State<Matches> {
           field: 'position',
           strictMode: true
       );
-    }).listen(_updateMarkers);
-  }
+    }).listen(_updateMarkers); }
 
+    
   _updateQuery(value) {
     final zoomMap = {
       100.0: 12.0,
