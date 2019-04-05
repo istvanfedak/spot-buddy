@@ -42,7 +42,7 @@ class _Matches extends State<Matches> {
   List<String> cList = new List(3);
   var newref;
 
-  List<String> remove = new List();
+
 
 
   @override
@@ -167,7 +167,7 @@ class _Matches extends State<Matches> {
   }
 
   void _updateMarkers(List<DocumentSnapshot> documentList) {
-    print(remove);
+    print(globals.remove);
     print(documentList);
     mapController.clearMarkers();
     documentList.forEach((DocumentSnapshot document) async {
@@ -205,7 +205,7 @@ class _Matches extends State<Matches> {
 
       //mapController.addMarker(marker);
 
-      if( !(remove.contains(id)) ) {
+      if( !(globals.remove.contains(id)) ) {
       mapController.addMarker(marker); }
 
     });
@@ -240,8 +240,8 @@ class _Matches extends State<Matches> {
 
     if (cList[0] == "none" && cList[1] == "none" && cList[2] == "none") {
       //newref.document(u).delete();
-      remove.add(u);
-      print(remove);
+      globals.remove.add(u);
+      print(globals.remove);
     }
   }
 

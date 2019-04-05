@@ -35,6 +35,12 @@ class _ListPageState extends State<ListPage> {
     var firestore = Firestore.instance;
     QuerySnapshot qn = await firestore.collection('users').getDocuments(); // move to crud
 
+    for (DocumentSnapshot ds in qn.documents) {
+      if(globals.remove.contains(ds.documentID)) {
+        qn.documents.remove(ds.documentID);
+      }
+    }
+
     return qn.documents;
   }
 
