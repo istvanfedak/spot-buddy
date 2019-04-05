@@ -8,7 +8,7 @@ String interest1 = "";
 String interest2 = "";
 String interest3 = "";
 String name = "";
-List<String> remove = new List();
+List<String> remove;
 
 void set_interests(String i1,String i2,String i3)
 {

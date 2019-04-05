@@ -29,72 +29,73 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
 
-  Future _data;
-
-  Future getPosts() async {
-    var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection('users').getDocuments(); // move to crud
-
-    for (DocumentSnapshot ds in qn.documents) {
-      if(globals.remove.contains(ds.documentID)) {
-        qn.documents.remove(ds.documentID);
-      }
-    }
-
-    return qn.documents;
-  }
-
-  navigateToDetail(DocumentSnapshot user){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(user: user,)));
-  }
+  List<DocumentSnapshot> data; //DONT FORGET TO INITIALIZE WITH NEW, OR ELSE YOU ARE REFERRING TO NULL (CANT ACCESS), NEED TO ALLOCATE FOR OBJECT
+  var firestore;
 
   @override
   initState() {
-
     super.initState();
-    _data = getPosts();
+    firestore = Firestore.instance;
+    //data = new List();
+  }
+
+  _g(DocumentSnapshot d) {
+    if( !(globals.remove.contains(d.documentID)) && d.documentID != globals.uid) {
+      data.add(d);
+    }
+  }
+
+  setup() async {
+    data = await new List();
+  }
+
+  getPosts() async {
+    await setup();
+    QuerySnapshot qn = await firestore.collection("users").getDocuments();
+    var list = qn.documents;
+
+    for(DocumentSnapshot d in list) {
+      await _g(d);
+    }
+
+  }
+
+  navigateToDetail(DocumentSnapshot user) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => DetailPage(user: user,)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder(
-          future: _data,
-          builder: (_,snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Text('Loading...'),
-              );
-            } else {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (_, index) {
-                    return Card(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text('\nEmail: '+ snapshot.data[index].data["email"] + '\n'),
-                          Text('Interest 1: ' + snapshot.data[index].data["interest1"]),
-                          Text('Interest 2: '+ snapshot.data[index].data["interest2"]),
-                          Text('Interest 3: ' + snapshot.data[index].data["interest3"]),
-                          ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                            child: ButtonBar(
-                              children: <Widget>[
-                                FlatButton(
-                                  child: const Text('View'),
-                                  onPressed: () => navigateToDetail(snapshot.data[index]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+    getPosts();
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('\nEmail: ' + data.elementAt(index).data["email"] + '\n'),
+                Text('Interest 1: ' + data.elementAt(index).data["interest1"]),
+                Text('Interest 2: ' + data.elementAt(index).data["interest2"]),
+                Text('Interest 3: ' + data.elementAt(index).data["interest3"]),
+                ButtonTheme
+                    .bar( // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child: const Text('View'),
+                        onPressed: () => navigateToDetail(data.elementAt(index)),
                       ),
-                    );
-                  });
-            }
-          }),
-    );
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
+
 }
 
 class DetailPage extends StatefulWidget {

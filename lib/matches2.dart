@@ -48,6 +48,7 @@ class _Matches extends State<Matches> {
   @override
   initState() {
     super.initState();
+    globals.remove = new List();
     location = new Location();
     firestore = Firestore.instance;
     geo = Geoflutterfire();
