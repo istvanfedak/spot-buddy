@@ -25,7 +25,7 @@ class _Matches extends State<Matches> {
 
 
   var geolocator = Geolocator();
-  var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+  //var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
   //Position _position;
 
   Location location = new Location();
