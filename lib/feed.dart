@@ -36,7 +36,7 @@ class _ListPageState extends State<ListPage> {
   initState() {
     super.initState();
     firestore = Firestore.instance;
-    //data = new List();
+    data = new List();
   }
 
   _g(DocumentSnapshot d) {
