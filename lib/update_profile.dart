@@ -97,7 +97,7 @@ class _updateProfile extends State<updateProfile> {
           });
         },
         value: _interest1,
-        //hint: new Text("Select mode"),
+        hint: new Text(globals.getInterest1()),
       ),
       Padding(
         padding: EdgeInsets.all(20.0),
@@ -119,7 +119,7 @@ class _updateProfile extends State<updateProfile> {
           });
         },
         value: _interest2,
-        //hint: new Text("Select mode"),
+        hint: new Text(globals.getInterest2()),
       ),
 
       Padding(
@@ -142,7 +142,7 @@ class _updateProfile extends State<updateProfile> {
           });
         },
         value: _interest3,
-        //hint: new Text("Select mode"),
+        hint: new Text(globals.getInterest3()),
       ),
     ];
   }
@@ -153,6 +153,15 @@ class _updateProfile extends State<updateProfile> {
         child: new Text(
             'Update', style: new TextStyle(fontSize: 20)),
         onPressed: () {
+          if(_interest1 == null) {
+            _interest1 = globals.getInterest1();
+          }
+          if(_interest2 == null) {
+            _interest2 = globals.getInterest2();
+          }
+          if(_interest3 == null) {
+            _interest3 = globals.getInterest3();
+          }
           updateData();
           globals.set_Name(_username);
           globals.set_interests(_interest1, _interest2, _interest3);
