@@ -198,7 +198,7 @@ class _Matches extends State<Matches> {
       GeoPoint pos = document.data['position']['geopoint'];
       double distance = document.data['distance'];
       String distancePrint;
-      if(distance == 0.0)
+      if(document.documentID == globals.get_userID())
         {
           distancePrint = "You are here";
         }
