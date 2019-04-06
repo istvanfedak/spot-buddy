@@ -36,7 +36,7 @@ class _ListPageState extends State<ListPage> {
   initState() {
     super.initState();
     firestore = Firestore.instance;
-    data = new List();
+    data = new List(); //BUILD CALLED BEFORE GETPOSTS FINISHES (ASYNC), SO NEEDS BLANK LIST TO INITIALLY WORK WITH
   }
 
   _g(DocumentSnapshot d) {
@@ -58,7 +58,9 @@ class _ListPageState extends State<ListPage> {
       await _g(d);
     }
 
+    setState(() {}); //NEEDED THIS TO TELL WIDGET TO REBUILD ITSELF AT THIS POINT AFTER DATA HAS BEEN GIVEN USERS FOR THE FEED
   }
+
 
   navigateToDetail(DocumentSnapshot user) {
     Navigator.push(context,
@@ -67,7 +69,7 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    getPosts();
+    getPosts(); //WHENEVER THIS FINISHES (ASYNC) THE WIDGET WILL BE REBUILT DUE TO THE SET STATE ABOVE, AND AT THIS POINT DATA WILL HAVE THE DATA IT NEEDS (NO LONGER BLANK LIKE INITIALLY)
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
