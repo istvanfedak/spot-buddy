@@ -41,6 +41,7 @@ class _Matches extends State<Matches> {
   List<String> iList = new List(3);
   List<String> cList = new List(3);
   var newref;
+  var zoom;
 
 
 
@@ -60,6 +61,7 @@ class _Matches extends State<Matches> {
     iList[1] = globals.getInterest2();
     iList[2] = globals.getInterest3();
     newref = Firestore.instance.collection("locations");
+    zoom = 12.0;
   }
 
 
@@ -85,7 +87,7 @@ class _Matches extends State<Matches> {
       GoogleMap(
         initialCameraPosition: CameraPosition(
             target: LatLng(24.142, -110.321),
-            zoom: 15
+            zoom: zoom
         ),
         onMapCreated: _onMapCreated,
         myLocationEnabled: false,
@@ -105,21 +107,25 @@ class _Matches extends State<Matches> {
           )
       ),
       */
-      Positioned(
-          top: 50,
-          left: 10,
-          child: Slider(
-            min: 100.0,
-            max: 500.0,
-            divisions: 4,
-            value: radius.value,
-            label: 'Radius ${radius.value}km',
-            activeColor: Colors.green,
-            inactiveColor: Colors.green.withOpacity(0.2),
-            onChanged: _updateQuery,
-          )
-      )
+      buildthis()
     ]);
+  }
+
+  buildthis() {
+    return Positioned(
+        top: 50,
+        left: 10,
+        child: Slider(
+          min: 100.0,
+          max: 500.0,
+          divisions: 4,
+          value: radius.value,
+          label: 'Radius ${radius.value}km',
+          activeColor: Colors.green,
+          inactiveColor: Colors.green.withOpacity(0.2),
+          onChanged: _updateQuery,
+        )
+    );
   }
 
   // Map Created Lifecycle Hook
@@ -145,7 +151,7 @@ class _Matches extends State<Matches> {
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(pos.latitude, pos.longitude),
-          zoom: 17.0,
+          zoom: zoom,
         )
     )
     );
@@ -288,12 +294,15 @@ class _Matches extends State<Matches> {
       400.0: 6.0,
       500.0: 5.0
     };
-    final zoom = zoomMap[value];
-    mapController.moveCamera(CameraUpdate.zoomTo(zoom));
+    zoom = zoomMap[value];
+    //mapController.moveCamera(CameraUpdate.zoomTo(zoom));
+
+    //the setstate is causing a rebuild ...
 
     setState(() {
       radius.add(value);
     });
+
   }
 
 
@@ -302,6 +311,5 @@ class _Matches extends State<Matches> {
     subscription.cancel();
     super.dispose();
   }
-
 
 }
