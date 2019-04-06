@@ -34,19 +34,26 @@ class _HomePageState extends State<HomePage>{
   Widget currentPage;
   crudMethods crudObj = new crudMethods();
 
+  setup() async {
+    await crudObj.getInterest(globals.get_userID()); //this needs to be done again somehow when interests are updated
+    await crudObj.getName(globals.get_userID());
+    setState(() {
+      currentTab = 0;
+      currentPage = Matches();
+    });
+  }
 
   @override
   void initState(){
     super.initState();
+
     if (globals.uid != "") {
-      crudObj.getInterest(globals.get_userID()); //this needs to be done again somehow when interests are updated
-      crudObj.getName(globals.get_userID());
+      setup();
     } //if uid can be found (or else major error trying to query firebase for document without uid key), set these user's interests globally
 
     else {
       _signOut(); } //else, to avoid error, if in homepage but uid cannot be found (empty), log user out and force to sign in again which will set the uid once again
-    currentTab = 0;
-    currentPage = Feed();
+
   }
 
 
@@ -54,7 +61,7 @@ class _HomePageState extends State<HomePage>{
   {
     setState(() {
       currentPage = Feed();
-      currentTab = 0;
+      currentTab = 1;
     });
 
   }
@@ -63,7 +70,7 @@ class _HomePageState extends State<HomePage>{
   {
     setState(() {
       currentPage = updateProfile();
-      currentTab = 1;
+      currentTab = 2;
     });
 
   }
@@ -71,7 +78,7 @@ class _HomePageState extends State<HomePage>{
   {
     setState(() {
       currentPage = Matches();
-      currentTab = 2;
+      currentTab = 0;
     });
 
   }
@@ -88,21 +95,26 @@ class _HomePageState extends State<HomePage>{
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: new AppBar(
-          title: new Text("Welcome", style: new TextStyle(fontSize: 20.0)),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('Logout', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-              onPressed: () => _signOut(),
-            )
-          ]
-      ),
-      body: currentPage,
+    if(currentPage == null) {
+      return new Center(
+          child: new CircularProgressIndicator() );
+    } else {
+      return Scaffold(
+        appBar: new AppBar(
+            title: new Text("Welcome", style: new TextStyle(fontSize: 20.0)),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('Logout',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                onPressed: () => _signOut(),
+              )
+            ]
+        ),
+        body: currentPage,
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentTab,
-        /*
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentTab,
+          /*
         onTap: (int index){
           setState(() {
             //print(index);
@@ -111,35 +123,40 @@ class _HomePageState extends State<HomePage>{
           });
         },
         */
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: new IconButton(
-              icon: new Icon(Icons.accessibility),
-              iconSize: 40,
-              onPressed: moveToFeed,
+          items: <BottomNavigationBarItem>[
+
+            BottomNavigationBarItem(
+              icon: new IconButton(
+                  icon: new Icon(Icons.home),
+                  iconSize: 40,
+                  onPressed: moveToMatches
+              ),
+              title: Text('Find Buddies'),
             ),
-            title: Text('Buddy Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.local_taxi),
+
+            BottomNavigationBarItem(
+              icon: new IconButton(
+                icon: new Icon(Icons.accessibility),
                 iconSize: 40,
-                onPressed: moveToUpdate
+                onPressed: moveToFeed,
+              ),
+              title: Text('Buddy Feed'),
             ),
-            title: Text('Update Profile'),
-          ),
-          BottomNavigationBarItem(
-            icon: new IconButton(
-                icon: new Icon(Icons.home),
-                iconSize: 40,
-                onPressed: moveToMatches
+
+            BottomNavigationBarItem(
+              icon: new IconButton(
+                  icon: new Icon(Icons.update),
+                  iconSize: 40,
+                  onPressed: moveToUpdate
+              ),
+              title: Text('Update Profile'),
             ),
-            title: Text('Matched Users'),
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.red,
-      ),
-    );
+
+          ],
+          type: BottomNavigationBarType.fixed,
+          fixedColor: Colors.red,
+        ),
+      );
+    }
   }
 }
