@@ -5,6 +5,10 @@ import 'crud.dart';
 import 'dart:async';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
+//dont show the users email
+//make card more aesthetic
+//use in app mail
+
 class Feed extends StatefulWidget{
   @override
   _Feed createState() => new _Feed();

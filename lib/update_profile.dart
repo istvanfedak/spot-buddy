@@ -5,6 +5,9 @@ import 'crud.dart';
 import 'dart:async';
 import 'interests.dart' as _interests;
 
+
+//make listview, make interests expandable not just 3
+
 class updateProfile extends StatefulWidget{
   @override
   _updateProfile createState() => new _updateProfile();

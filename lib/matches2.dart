@@ -12,6 +12,8 @@ import 'dart:async';
 
 import 'globals.dart' as globals;
 
+//say you/me
+
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 //COULD EVENTUALLY MAKE IT THAT GOOGLE MAPS INITIAL CAMERA POSITION
