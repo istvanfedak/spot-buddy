@@ -36,6 +36,8 @@ dependencies:
   geoflutterfire: ^2.0.3+2
   # try
   rxdart: ^0.20.0
+  # email
+  flutter_email_sender: ^2.0.0
 
 
 

@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage>{
   setup() async {
     await crudObj.getInterest(globals.get_userID()); //this needs to be done again somehow when interests are updated
     await crudObj.getName(globals.get_userID());
+    await crudObj.getEmail(globals.get_userID());
     setState(() {
       currentTab = 0;
       currentPage = Matches();

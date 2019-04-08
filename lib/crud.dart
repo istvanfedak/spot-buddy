@@ -28,6 +28,11 @@ class crudMethods {
     DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
     globals.set_Name(document.data['username']);
   }
+
+  Future<void> getEmail(String uid) async {
+    DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();
+    globals.set_Email(document.data['email']);
+  }
   
   Future<void> getInterest(String uid) async{
     DocumentSnapshot document = await Firestore.instance.collection('users').document(uid).get();

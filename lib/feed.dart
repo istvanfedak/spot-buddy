@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'globals.dart' as globals;
 import 'crud.dart';
 import 'dart:async';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class Feed extends StatefulWidget{
   @override
@@ -37,6 +38,7 @@ class _ListPageState extends State<ListPage> {
     super.initState();
     firestore = Firestore.instance;
     data = new List(); //BUILD CALLED BEFORE GETPOSTS FINISHES (ASYNC), SO NEEDS BLANK LIST TO INITIALLY WORK WITH
+    getPosts();
   }
 
   _g(DocumentSnapshot d) {
@@ -45,12 +47,14 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
+/*
   setup() async {
     data = await new List();
   }
+*/
 
   getPosts() async {
-    await setup();
+    //await setup();
     QuerySnapshot qn = await firestore.collection("users").getDocuments();
     var list = qn.documents;
 
@@ -61,15 +65,16 @@ class _ListPageState extends State<ListPage> {
     setState(() {}); //NEEDED THIS TO TELL WIDGET TO REBUILD ITSELF AT THIS POINT AFTER DATA HAS BEEN GIVEN USERS FOR THE FEED
   }
 
-
+/*
   navigateToDetail(DocumentSnapshot user) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => DetailPage(user: user,)));
   }
+*/
 
   @override
   Widget build(BuildContext context) {
-    getPosts(); //WHENEVER THIS FINISHES (ASYNC) THE WIDGET WILL BE REBUILT DUE TO THE SET STATE ABOVE, AND AT THIS POINT DATA WILL HAVE THE DATA IT NEEDS (NO LONGER BLANK LIKE INITIALLY)
+    //getPosts(); //WHENEVER THIS FINISHES (ASYNC) THE WIDGET WILL BE REBUILT DUE TO THE SET STATE ABOVE, AND AT THIS POINT DATA WILL HAVE THE DATA IT NEEDS (NO LONGER BLANK LIKE INITIALLY)
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
@@ -86,8 +91,15 @@ class _ListPageState extends State<ListPage> {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: const Text('View'),
-                        onPressed: () => navigateToDetail(data.elementAt(index)),
+                        child: const Text('Email'),
+                        /*
+                        onPressed: () {
+                          setState(() {
+                            FlutterEmailSender.send(globals.sendEmail(data.elementAt(index).data["email"]));
+                          });
+                        },
+                        */
+                        onPressed: () => FlutterEmailSender.send(globals.sendEmail(data.elementAt(index).data["email"])),
                       ),
                     ],
                   ),
@@ -100,6 +112,7 @@ class _ListPageState extends State<ListPage> {
 
 }
 
+/*
 class DetailPage extends StatefulWidget {
   final DocumentSnapshot user;
   DetailPage({this.user});
@@ -139,3 +152,4 @@ class _DetailPageState extends State<DetailPage>{
     );
   }
 }
+*/
