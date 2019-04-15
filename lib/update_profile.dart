@@ -63,8 +63,8 @@ class _updateProfile extends State<updateProfile> {
         margin: EdgeInsets.all(40.0),
         child: new Form(
           key: formKey,
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: new ListView(
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: buildInputs() + buildSubmitButtons(),
           ),
         ),
