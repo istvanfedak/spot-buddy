@@ -12,6 +12,8 @@ import 'dart:async';
 
 import 'globals.dart' as globals;
 
+//make marker nicer, add click option(check stackoverflow bookmark) for each marker that allows email right away
+
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 //COULD EVENTUALLY MAKE IT THAT GOOGLE MAPS INITIAL CAMERA POSITION
