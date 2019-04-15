@@ -12,8 +12,6 @@ import 'dart:async';
 
 import 'globals.dart' as globals;
 
-//say you/me
-
 //GOOGLE MAPS NOT CONFIGURED FOR ANDROID YET
 
 //COULD EVENTUALLY MAKE IT THAT GOOGLE MAPS INITIAL CAMERA POSITION
@@ -202,7 +200,7 @@ class _Matches extends State<Matches> {
       String distancePrint;
       if(document.documentID == globals.get_userID())
         {
-          distancePrint = "You are here";
+          distancePrint = "Me";
         }
         else {
             distancePrint = "$distance kilometers away from you";

@@ -5,7 +5,6 @@ import 'crud.dart';
 import 'dart:async';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-//dont show the users email
 //make card more aesthetic
 //use in app mail
 
@@ -86,7 +85,7 @@ class _ListPageState extends State<ListPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('\nEmail: ' + data.elementAt(index).data["email"] + '\n'),
+                Text('\nName: ' + data.elementAt(index).data["username"] + '\n'),
                 Text('Interest 1: ' + data.elementAt(index).data["interest1"]),
                 Text('Interest 2: ' + data.elementAt(index).data["interest2"]),
                 Text('Interest 3: ' + data.elementAt(index).data["interest3"]),
