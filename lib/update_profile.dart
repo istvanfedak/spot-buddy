@@ -6,7 +6,7 @@ import 'dart:async';
 import 'interests.dart' as _interests;
 
 
-//make listview, make interests expandable not just 3
+//make interests expandable not just 3
 //make dropdown filter (also for create profile)
 
 class updateProfile extends StatefulWidget{
