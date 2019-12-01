@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'LoginPage.dart';
+import 'package:firebase/firebase.dart';
+// flutter emulators --launch Pixel_3_API_29
+// flutter run
 
 void main() => runApp(MyApp());
 
