@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
-  ForgotPasswordPage({Key key, this.title}) : super(key: key);
+  ForgotPasswordPage({Key key}) : super(key: key) {
+    title = "Forgot Password Page";
+  }
 
-  final String title;
+  String title;
 
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();

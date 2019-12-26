@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'screens/LoginPage.dart';
 import 'package:spot_buddy/model/Model.dart';
 import 'package:spot_buddy/services/AuthService.dart';
 import 'package:spot_buddy/services/ValidatorService.dart';
-
+import 'package:spot_buddy/controllers/RootPageController.dart';
 // flutter emulators --launch Pixel_3_API_29
 // flutter run
 
+// main entry point to the program
 void main() {
-  runApp(Model(
+  runApp(
+    // The class that contains the model of the app
+    Model(
     appName: "SpotBuddy",
     appColor: Colors.blue,
     authService: AuthService(),
@@ -17,6 +19,7 @@ void main() {
   ));
 }
 
+// Root widget of the application
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Model.of(context).appColor,
       ),
-      home: LoginPage(title: 'Login'),
+      home: RootPageController(context: context,),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:spot_buddy/services/AuthService.dart';
 import 'package:spot_buddy/services/ValidatorService.dart';
 import 'package:spot_buddy/model/Model.dart';
 import 'package:spot_buddy/screens/HomePage.dart';
-import 'package:spot_buddy/screens/SignUp.dart';
+import 'package:spot_buddy/screens/SignUpPage.dart';
 import 'package:spot_buddy/screens/ForgotPasswordPage.dart';
 
 
@@ -14,8 +14,9 @@ class LoginPageController {
   ValidatorService validatorService;
   final loginFormKey = GlobalKey<FormState>();
   final BuildContext context;
+  final VoidCallback onSignedIn;
 
-  LoginPageController({this.context, this.authService, this.validatorService}) {
+  LoginPageController({this.context, this.onSignedIn}) {
     _email = null;
     _password = null;
     authService = Model.of(context).authService;
@@ -25,22 +26,16 @@ class LoginPageController {
   void setEmail(String email) => this._email = email;
   void setPassword(String password) => this._password = password;
 
-  void pushHomePage() => 
-    Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage(title: "Home",)),
-    );
-
   void pushSignUpPage() => 
     Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignUpPage(title: "Sign Up",)),
+          MaterialPageRoute(builder: (context) => SignUpPage()),
     );
 
   void pushForgotPasswordPage() => 
     Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ForgotPasswordPage(title: "Forgot Password?",)),
+          MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
     );
   
   Future<void> validateAndLogin() async {
@@ -53,8 +48,7 @@ class LoginPageController {
           password: _password
         );
         print("UserID: $userID");
-        pushHomePage();
-        
+        onSignedIn();
       }
       catch (error) {
         debugPrint('error: $error');

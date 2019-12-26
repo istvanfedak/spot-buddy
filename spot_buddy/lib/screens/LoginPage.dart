@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:spot_buddy/controllers/LoginPageController.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+  final loginPageController;
+  LoginPage({Key key, this.loginPageController}) : super(key: key) {
+    title = "Login";
+  }
 
-  final String title;
+  String title;
   
 
   @override
@@ -15,8 +18,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isSwitched = true;
 
-  LoginPageController _loginPageController;
-
 Widget signUpForm() {
     return SizedBox(
       width: 300,
@@ -24,12 +25,12 @@ Widget signUpForm() {
         children: <Widget>[
           FlatButton(
             child: Text("Sign up"),
-            onPressed: _loginPageController.pushSignUpPage,
+            onPressed: widget.loginPageController.pushSignUpPage,
           ),
           SizedBox(width: 25.0,),
           FlatButton(
             child: Text("Forgot password?"),
-            onPressed: _loginPageController.pushForgotPasswordPage,
+            onPressed: widget.loginPageController.pushForgotPasswordPage,
           ),
         ],
       )
@@ -47,8 +48,8 @@ Widget signUpForm() {
                 decoration: InputDecoration(
                   labelText: 'Email',
                 ),
-                validator: (value) { return _loginPageController.validatorService.validateEmail(value); },
-                onSaved: _loginPageController.setEmail,
+                validator: (value) { return widget.loginPageController.validatorService.validateEmail(value); },
+                onSaved: widget.loginPageController.setEmail,
               ),
             ),
             SizedBox(height: 20.0,),
@@ -59,8 +60,8 @@ Widget signUpForm() {
                 decoration: InputDecoration(
                   labelText: 'Password'
                 ),
-                validator: (value) { return _loginPageController.validatorService.validatePassword(value); },
-                onSaved: _loginPageController.setPassword,
+                validator: (value) { return widget.loginPageController.validatorService.validatePassword(value); },
+                onSaved: widget.loginPageController.setPassword,
               ),
             ),
             SizedBox(height: 30.0,),
@@ -89,7 +90,7 @@ Widget signUpForm() {
                   textAlign: TextAlign.center,
                 ),
               ),
-              onPressed: _loginPageController.validateAndLogin,
+              onPressed: widget.loginPageController.validateAndLogin,
             ),
             signUpForm()
           ],
@@ -99,7 +100,7 @@ Widget signUpForm() {
 
   @override
   Widget build(BuildContext context) {
-    _loginPageController = LoginPageController(context: context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -110,7 +111,7 @@ Widget signUpForm() {
         
       ),
       body: Form(
-        key: _loginPageController.loginFormKey,
+        key: widget.loginPageController.loginFormKey,
         // autovalidate: _autoValidate,
         child: loginForm(),
       ),

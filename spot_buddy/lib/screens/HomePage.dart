@@ -1,37 +1,33 @@
 
 import 'package:flutter/material.dart';
+import 'package:spot_buddy/controllers/HomePageController.dart';
 import 'LoginPage.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-  
+  final HomePageController homePageController;
+  HomePage({Key key, this.homePageController}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isSwitched = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.title,
+          "Home",
           style: TextStyle(fontSize: 30.0),
         ),
         centerTitle: true,
         
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Home"),
-          ],
+        child: FlatButton(
+          child: Text("Logout"),
+          onPressed: widget.homePageController.signOut,
         ),
       ),
     );
