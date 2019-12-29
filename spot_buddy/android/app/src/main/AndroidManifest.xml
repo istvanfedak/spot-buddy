@@ -10,6 +10,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="spot_buddy"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- Google maps API key -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="API Key"/>
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

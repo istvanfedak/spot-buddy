@@ -47,7 +47,6 @@ class LoginPageController {
           email: _email,
           password: _password
         );
-        print("UserID: $userID");
         onSignedIn();
       }
       catch (error) {

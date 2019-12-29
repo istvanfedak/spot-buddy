@@ -1,6 +1,9 @@
 # Firebase credentials
 google-services.json
 
+# google maps api key
+AndroidManifest.xml
+
 # Miscellaneous
 *.class
 *.log
