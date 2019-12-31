@@ -8,6 +8,7 @@ import 'package:spot_buddy/controllers/RootPageController.dart';
 
 // main entry point to the program
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     // The class that contains the model of the app
     Model(

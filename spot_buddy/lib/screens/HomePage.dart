@@ -12,14 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(25.7617, -80.1918);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +33,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      
       body: GoogleMap(
         zoomGesturesEnabled: true,
-        onMapCreated: _onMapCreated,
+        onMapCreated: widget.homePageController.onMapCreated,
         initialCameraPosition: CameraPosition(
-          target: _center,
+          target:  widget.homePageController.center,
           zoom: 11.0,
         ),
       ),
