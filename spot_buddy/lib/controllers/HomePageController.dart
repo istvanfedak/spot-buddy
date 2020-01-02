@@ -10,10 +10,16 @@ class HomePageController {
   AuthService authService;
   final BuildContext context;
   final VoidCallback onSignedOut;
+  int _index;
 
   HomePageController({this.context, this.onSignedOut}) {
     authService = Model.of(context).authService;
+    _index = 1;
   }
+
+  void setIndex(int index) => _index = index;
+
+  int getIndex() => _index;
 
   void signOut() async
   {

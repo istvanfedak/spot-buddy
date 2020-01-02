@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:spot_buddy/controllers/HomePageController.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:spot_buddy/screens/MapPage.dart';
+import 'package:spot_buddy/screens/DiscoveryPage.dart';
+import 'package:spot_buddy/screens/MessagingPage.dart';
 
 class HomePage extends StatefulWidget {
   final HomePageController homePageController;
@@ -12,36 +14,60 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
+
+  void onTabTapped(int index) {
+    setState(() {
+      if(index == 0)
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MessagingPage()),
+        );
+      else if(index == 2) 
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DiscoveryPage()),
+        );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Home",
-          style: TextStyle(fontSize: 30.0),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(top: 130.0),
+        child: FloatingActionButton(
+          onPressed: widget.homePageController.signOut,
+          tooltip: 'Logout',
+          child: Icon(Icons.person), // person account_cirlce
         ),
-        // centerTitle: true,
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              "Logout",
-              style: TextStyle(
-                color: Colors.white
-              ),
-            ),
-            onPressed: widget.homePageController.signOut,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      
+      body: MapPage(),
+
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        onTap: onTabTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            title: Text('Messages'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('Map'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            title: Text('Discover'),
           ),
         ],
+        currentIndex: widget.homePageController.getIndex(),
+        selectedItemColor: Colors.lightBlue,
       ),
-      body: GoogleMap(
-        zoomGesturesEnabled: true,
-        onMapCreated: widget.homePageController.onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target:  widget.homePageController.center,
-          zoom: 11.0,
-        ),
-      ),
-      
     );
   }
 }
