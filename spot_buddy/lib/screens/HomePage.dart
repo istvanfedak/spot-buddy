@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:spot_buddy/controllers/HomePageController.dart';
 import 'package:spot_buddy/screens/MapPage.dart';
-import 'package:spot_buddy/screens/DiscoveryPage.dart';
-import 'package:spot_buddy/screens/MessagingPage.dart';
+
 
 class HomePage extends StatefulWidget {
   final HomePageController homePageController;
@@ -19,15 +18,9 @@ class _HomePageState extends State<HomePage> {
   void onTabTapped(int index) {
     setState(() {
       if(index == 0)
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MessagingPage()),
-        );
+        widget.homePageController.pushMessagingPage();
       else if(index == 2) 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DiscoveryPage()),
-        );
+        widget.homePageController.pushDiscoveryPage();
     });
   }
 
@@ -38,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(top: 130.0),
         child: FloatingActionButton(
-          onPressed: widget.homePageController.signOut,
+          onPressed: widget.homePageController.pushUserPage,
           tooltip: 'Logout',
           child: Icon(Icons.person), // person account_cirlce
         ),

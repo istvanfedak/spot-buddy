@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:spot_buddy/services/AuthService.dart';
 import 'package:spot_buddy/services/ValidatorService.dart';
 import 'package:spot_buddy/model/Model.dart';
-import 'package:spot_buddy/screens/HomePage.dart';
 import 'package:spot_buddy/screens/SignUpPage.dart';
 import 'package:spot_buddy/screens/ForgotPasswordPage.dart';
 

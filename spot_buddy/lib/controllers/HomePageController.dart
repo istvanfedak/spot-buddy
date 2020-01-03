@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:spot_buddy/services/AuthService.dart';
-import 'package:spot_buddy/model/Model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
+import 'package:spot_buddy/screens/DiscoveryPage.dart';
+import 'package:spot_buddy/screens/MessagingPage.dart';
+import 'package:spot_buddy/screens/UserPage.dart';
+import 'package:spot_buddy/controllers/UserPageController.dart';
 
 class HomePageController {
   GoogleMapController mapController;
-  AuthService authService;
   final BuildContext context;
   final VoidCallback onSignedOut;
   int _index;
 
   HomePageController({this.context, this.onSignedOut}) {
-    authService = Model.of(context).authService;
     _index = 1;
+  }
+
+  void pushDiscoveryPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DiscoveryPage()),
+    );
+  }
+
+  void pushMessagingPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MessagingPage()),
+    );
+  }
+
+  void pushUserPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserPage(
+        userPageController: UserPageController(
+          context: context,
+          onSignedOut: onSignedOut,
+        ),
+      )),
+    );
   }
 
   void setIndex(int index) => _index = index;
 
   int getIndex() => _index;
-
-  void signOut() async
-  {
-    try {
-      await authService.signOut();
-      onSignedOut();
-    }
-    catch (error) {
-      print(error);
-    }
-  }
 
   final LatLng center = const LatLng(25.7617, -80.1918);
 
